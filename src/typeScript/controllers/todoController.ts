@@ -1,4 +1,4 @@
-import { ACTION_FORM, KEY, PAGE } from "../constants/type";
+import { ACTION_FORM, KEY, PAGE } from "../constants/enum";
 import { handleCreateId } from "../helper/createId";
 import { getLocalStorage, clearLocalStorage } from "../helper/localStorage";
 

@@ -1,4 +1,4 @@
-import { ACTION_FORM, KEY } from "../constants/type";
+import { ACTION_FORM, KEY } from "../constants/enum";
 import debounce from "../helper/debounce";
 import { handleFormTodo } from "../helper/form";
 import { clearLocalStorage, setLocalStorage } from "../helper/localStorage";
