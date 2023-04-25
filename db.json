@@ -1,0 +1,97 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "email": "manhquan@gmail.com",
+      "password": "123456"
+    },
+    {
+      "email": "manhquyen@gmail.com",
+      "password": "123456",
+      "id": 2
+    },
+    {
+      "email": "quan@gmail.com",
+      "password": "123456",
+      "id": 3
+    },
+    {
+      "email": "quyen@gmail.com",
+      "password": "123456",
+      "id": 4
+    },
+    {
+      "email": "mannj@gmail.com",
+      "password": "123456",
+      "id": 5
+    }
+  ],
+  "todoList": [
+    {
+      "email": "manhquan@gmail.com",
+      "id": 1,
+      "title": "learn html",
+      "complete": true
+    },
+    {
+      "email": "manhquan@gmail.com",
+      "id": 2,
+      "title": "learn css",
+      "complete": true
+    },
+    {
+      "email": "manhquan@gmail.com",
+      "id": 3,
+      "title": "learn css",
+      "complete": true
+    },
+    {
+      "email": "manhquan@gmail.com",
+      "id": 4,
+      "title": "learn js",
+      "complete": true
+    },
+    {
+      "email": "manhquan@gmail.com",
+      "id": 5,
+      "title": "learn reactjs",
+      "complete": true
+    },
+    {
+      "email": "manhquan@gmail.com",
+      "id": 6,
+      "title": "learn ts",
+      "complete": true
+    },
+    {
+      "email": "manhquan@gmail.com",
+      "id": 7,
+      "title": "learn express",
+      "complete": true
+    },
+    {
+      "email": "manhquan@gmail.com",
+      "id": 8,
+      "title": "learn nextjs",
+      "complete": false
+    },
+    {
+      "email": "manhquan@gmail.com",
+      "id": 9,
+      "title": "learn nestjs",
+      "complete": false
+    },
+    {
+      "email": "manhquan@gmail.com",
+      "id": 10,
+      "title": "learn react native",
+      "complete": false
+    },
+    {
+      "id": "2c4bb32a2cbcc",
+      "email": "manhquyen@gmail.com",
+      "title": "hello",
+      "complete": false
+    }
+  ]
+}

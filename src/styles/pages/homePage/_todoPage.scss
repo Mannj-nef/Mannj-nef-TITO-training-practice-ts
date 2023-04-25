@@ -1,0 +1,169 @@
+@use "../../abstracts/" as *;
+@use "../../base/" as *;
+
+.todo {
+    &-page {
+        background-color: $bg-secon;
+        min-height: 100vh;
+
+        position: relative;
+        transition: all 0.5s ease-in;
+    }
+}
+.todo {
+    &-content {
+        padding-bottom: 80px;
+    }
+    &-main {
+        background-color: $bg-primary;
+        padding: 50px;
+        border-radius: 12px;
+        max-width: 700px;
+        margin: 50px auto 0;
+        box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    }
+    &-list {
+        margin-top: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    &-item {
+        @include flex-between();
+
+        position: relative;
+        border-radius: 12px;
+        padding: 20px;
+        background-color: $bg-secon;
+    }
+    &-item:hover {
+        cursor: pointer;
+        background-color: $bg-graye2;
+    }
+    &-btn {
+        padding: 8px;
+        font-size: $text-sm;
+        color: $bg-primary;
+    }
+    &-btn-wrapp {
+        flex-shrink: 0;
+        position: relative;
+
+        .btn-update {
+            background-color: $success-color;
+        }
+        .btn-remove {
+            background-color: $error-color;
+        }
+        .todo-confirm-delete {
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            position: absolute;
+            @include flex-between;
+            gap: 10px;
+            width: 330px;
+            padding: 10px;
+            border-radius: 8px;
+            background-color: $error-opacity;
+            z-index: 10;
+            .btn-confirm-remove-wrapp {
+                flex-shrink: 0;
+                font-size: $text-sm;
+            }
+            .btn-confirm-remove {
+                padding: 8px;
+                color: $bg-primary;
+                background-color: $error-color;
+            }
+            .btn-confirm-remove-cancel {
+                padding: 8px;
+            }
+            p {
+                color: $bg-primary;
+            }
+        }
+        .update-icon,
+        .remove-icon {
+            pointer-events: none;
+        }
+    }
+}
+.main {
+    &-title {
+        text-align: center;
+        font-weight: 700;
+        color: $four-color;
+        text-transform: capitalize;
+        font-size: $text-xxl;
+        letter-spacing: 2px;
+        margin-bottom: 30px;
+    }
+    &-form {
+        position: relative;
+        overflow: hidden;
+        .button-loading {
+            .loading {
+                display: block;
+            }
+            span {
+                display: none;
+            }
+        }
+    }
+    &-input {
+        font-size: 16px;
+        width: 100%;
+        padding: 15px;
+        padding-right: 50px;
+        border-radius: 8px;
+        border: currentColor;
+        background-color: $bg-graye2;
+        padding-right: 100px;
+    }
+    &-action {
+        position: absolute;
+        right: 0;
+        top: 0;
+        height: 100%;
+        gap: 20px;
+
+        @include flex-center;
+
+        .btn-remove-form {
+            --size: 20px;
+            width: var(--size);
+            height: var(--size);
+            padding: 4px;
+            background-color: #aeaaaa;
+            border-radius: 100%;
+            border: none;
+            cursor: pointer;
+            display: none;
+
+            i {
+                font-size: $text-sm;
+                color: $primary-color;
+            }
+        }
+        .main-update.btn-remove-form {
+            @include flex-center;
+        }
+    }
+
+    &-btn {
+        cursor: pointer;
+        padding: 10px;
+        height: 100%;
+        width: 90px;
+        border-top-right-radius: 8px;
+        border-bottom-right-radius: 8px;
+        border: none;
+        color: $bg-primary;
+        background-color: $secon-color;
+    }
+}
+
+.todo-hidden {
+    transform: translateY(200%);
+}

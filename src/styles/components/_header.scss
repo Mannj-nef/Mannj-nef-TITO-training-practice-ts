@@ -1,0 +1,33 @@
+@use "../abstracts/" as *;
+@use "../base/" as *;
+.header {
+    @include flex-between();
+    padding: 10px 0;
+    &-title {
+        text-transform: uppercase;
+        font-weight: 800;
+        color: $four-color;
+        font-size: $text-xl;
+    }
+    &-btn {
+        padding: 18px 40px;
+        color: $primary-color;
+        background-color: $secon-color;
+    }
+}
+.nav {
+    &-list {
+        display: flex;
+        gap: 5px;
+    }
+    &-link {
+        color: #1d3597a0;
+        font-weight: 500;
+        padding: 10px;
+        display: block;
+        text-decoration: none;
+    }
+    &-link:hover {
+        text-decoration: underline;
+    }
+}

@@ -1,0 +1,30 @@
+@use "../abstracts/" as *;
+
+html {
+    font-size: $text-base;
+    line-height: 1.7;
+
+    font-family: $font-primary;
+    scroll-behavior: smooth;
+
+    letter-spacing: 0.1em;
+}
+
+.container {
+    max-width: 1024px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+a {
+    color: inherit;
+    font-family: inherit;
+}
+
+.d-none {
+    display: none;
+}
+
+.disable {
+    opacity: 0.5;
+}
