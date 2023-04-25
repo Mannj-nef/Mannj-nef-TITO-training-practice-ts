@@ -1,14 +1,10 @@
-interface IAuthSchema {
-  id: any;
-  email: any;
-  password: any;
-}
+import { IAuthSchemaDto } from "../constants/interface";
 
 class AuthSchema {
-  id: any;
-  email: any;
-  password: any;
-  constructor({ id, email, password }: IAuthSchema) {
+  id: number;
+  email: string;
+  password: string;
+  constructor({ id, email, password }: IAuthSchemaDto) {
     this.id = id;
     this.email = email;
     this.password = password;
