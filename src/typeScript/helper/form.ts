@@ -1,4 +1,4 @@
-import { FORM } from "../constants/type";
+import { FORM } from "../constants/enum";
 import debounce from "./debounce";
 import { validate } from "./validate";
 

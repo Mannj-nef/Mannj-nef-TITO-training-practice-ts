@@ -1,4 +1,4 @@
-import { KEY } from "../constants/type";
+import { KEY } from "../constants/enum";
 import { getLocalStorage } from "../helper/localStorage";
 
 interface IAuthController {

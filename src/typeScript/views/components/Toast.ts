@@ -1,4 +1,4 @@
-import { TOAST } from "../../constants/type";
+import { TOAST } from "../../constants/enum";
 
 function Toast(
   type: string = "error",

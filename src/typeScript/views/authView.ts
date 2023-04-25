@@ -1,5 +1,5 @@
 import { handleFormLogin } from "../helper/form";
-import { FORM } from "../constants/type";
+import { FORM } from "../constants/enum";
 
 class AuthView {
   constructor() {
