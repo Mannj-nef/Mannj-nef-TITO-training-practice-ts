@@ -6,31 +6,34 @@ import { KEY, PAGE } from "../constants/enum";
 import MESSAGE from "../constants/message";
 import { setLocalStorage } from "../helper/localStorage";
 import TOAST from "../helper/toast";
+import { IAuth } from "../constants/interface";
+import { AuthLogin } from "../constants/types";
 
 class AuthService {
-  user: any;
-  AppView: any;
-  endpoint: any;
+  user: IAuth | {};
+  AppView: AppView;
+  endpoint: string;
+
   constructor() {
     this.user = {};
     this.AppView = new AppView();
     this.endpoint = `${process.env.BASE_URL}/users`;
   }
 
-  async getUsers() {
+  async getUsers(): Promise<IAuth[]> {
     const endpointUrl = this.endpoint;
 
     try {
-      const { data } = await axios.get(endpointUrl);
+      const { data }: { data: IAuth[] } = await axios.get(endpointUrl);
       return data;
     } catch (error) {
-      this.AppView.createToast();
-      return null;
+      this.AppView.createToast(TOAST.ERROR(error));
+      throw error;
     }
   }
 
-  async findLoginUser({ email, password }: { email: any; password: any }) {
-    const condition = (user: any) =>
+  async findLoginUser({ email, password }: AuthLogin): Promise<IAuth> {
+    const condition = (user: IAuth) =>
       user.email === email && user.password === password;
 
     try {
@@ -38,60 +41,64 @@ class AuthService {
 
       if (!user) {
         this.AppView.createToast(TOAST.ERROR(MESSAGE.ACCOUNT_NOT_EXISTS));
-        return null;
       }
 
       return user;
     } catch (error) {
       this.AppView.createToast(TOAST.ERROR(error));
-      return null;
+      throw error;
     }
   }
 
-  async fildEmailUser({ email }: { email: any }) {
-    const condition = (user: any) => email === user.email;
+  async fildEmailUser({ email }: { email: string }): Promise<IAuth> {
+    const condition = (user: IAuth) => email === user.email;
     try {
       const user = await this.findUser(condition);
 
       return user;
     } catch (error) {
       this.AppView.createToast(TOAST.ERROR(error));
-      return null;
+      throw error;
     }
   }
 
-  async findUser(condition: any) {
-    const users: any = await this.getUsers();
-    const user: any = users.filter(condition);
+  async findUser(condition: (user: IAuth) => boolean): Promise<IAuth> {
+    const users = await this.getUsers();
+    const user = users.filter(condition);
+
     this.user = user.length > 0 ? new AuthSchema(user[0]) : {};
 
-    return user;
+    return user[0];
   }
 
-  async registerUser({ email, password }: { email: any; password: any }) {
+  async registerUser({ email, password }: AuthLogin): Promise<IAuth> {
     const endpointUrl = this.endpoint;
 
     try {
-      const { data } = await axios.post(endpointUrl, { email, password });
+      const { data }: { data: IAuth } = await axios.post(endpointUrl, {
+        email,
+        password,
+      });
       this.user = new AuthSchema(data);
 
       return data;
     } catch (error) {
       this.AppView.createToast(TOAST.ERROR(error));
-      return null;
+      throw error;
     }
   }
 
-  loginSuccess = (user: any) => {
+  loginSuccess = (user: IAuth): void => {
     setLocalStorage(KEY.LOCALSTORAGE_UESR, user);
     this.AppView.createToast(TOAST.SUCCESS(MESSAGE.LOGIN_SUCCESS));
 
     this.AppView.showPage("login", PAGE.TODO);
   };
 
-  accountExists = (hasUser: any) => {
-    if (hasUser.length > 0) {
+  accountExists = (hasUser: IAuth): void => {
+    if (hasUser) {
       this.AppView.createToast(TOAST.ERROR(MESSAGE.ACCOUNT_EXISTS));
+      return;
     }
   };
 }

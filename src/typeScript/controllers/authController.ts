@@ -5,7 +5,7 @@ import AuthService from "../services/auth.service";
 import AuthView from "../views/authView";
 import AppView from "../views/appView";
 
-import { AuthLogin } from "../constants/types";
+import { AuthLocalStorage, AuthLogin } from "../constants/types";
 import { IAuth, IAuthParam } from "../constants/interface";
 import renderTodo from "../helper/renderTodo";
 
@@ -27,7 +27,7 @@ class AuthController {
   handleLogin = async (data: AuthLogin): Promise<void> => {
     const Auth = this.service;
 
-    const [user] = await Auth.findLoginUser(data);
+    const user = await Auth.findLoginUser(data);
 
     if (user) {
       this.handleLoginSuccess(user);
@@ -38,20 +38,18 @@ class AuthController {
     const Auth = this.service;
 
     const hasUser = await Auth.fildEmailUser(data);
-    Auth.accountExists(hasUser);
 
-    const user = await Auth.registerUser(data);
-    if (user) {
-      this.handleLoginSuccess(user);
+    if (hasUser) {
+      Auth.accountExists(hasUser);
+    } else {
+      const user = await Auth.registerUser(data);
+      if (user) {
+        this.handleLoginSuccess(user);
+      }
     }
   };
 
-  handleLoginSuccess(user: {
-    email: string;
-    id: string;
-    password?: string;
-  }): void {
-    const AppView = this.appView;
+  handleLoginSuccess(user: IAuth): void {
     const AuthService = this.service;
 
     // delete password before saving in localStorage
@@ -67,7 +65,7 @@ class AuthController {
     const Auth = this.service;
     const AppView = this.appView;
 
-    const userJson = getLocalStorage(KEY.LOCALSTORAGE_UESR);
+    const userJson: AuthLocalStorage = getLocalStorage(KEY.LOCALSTORAGE_UESR);
 
     if (!userJson) {
       AppView.createLogin();
