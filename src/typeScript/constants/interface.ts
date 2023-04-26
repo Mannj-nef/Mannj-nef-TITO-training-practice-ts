@@ -7,7 +7,7 @@ import TodoView from "../views/todoView";
 export interface IAuth {
   id: number;
   email: string;
-  password: string;
+  password?: string;
   confirmPassword?: string;
 }
 export interface IAuthParam {
