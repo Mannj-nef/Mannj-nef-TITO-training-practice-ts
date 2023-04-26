@@ -1,53 +1,40 @@
 import { KEY } from "../constants/enum";
 import { getLocalStorage } from "../helper/localStorage";
 
-interface IAuthController {
-  AuthService: any;
-  AuthView: any;
-  AppView: any;
-  TodoController: any;
-  TodoService: any;
-  TodoView: any;
-}
+import AuthService from "../services/auth.service";
+import AuthView from "../views/authView";
+import AppView from "../views/appView";
+
+import { AuthLogin } from "../constants/types";
+import { IAuth, IAuthParam } from "../constants/interface";
+import renderTodo from "../helper/renderTodo";
 
 class AuthController {
-  service: any;
-  view: any;
-  appView: any;
-  todoControll: any;
-  todoService: any;
-  todoView: any;
-  constructor({
-    AuthService,
-    TodoController,
-    TodoService,
-    TodoView,
-    AppView,
-    AuthView,
-  }: IAuthController) {
-    this.service = AuthService;
-    this.view = AuthView;
-    this.appView = AppView;
+  service: AuthService;
+  view: AuthView;
+  appView: AppView;
 
-    this.todoControll = TodoController;
-    this.todoService = TodoService;
-    this.todoView = TodoView;
+  constructor(props: IAuthParam) {
+    this.service = props.AuthService;
+    this.view = props.AuthView;
+    this.appView = props.AppView;
 
     this.handleCheckLogin();
     this.view.getLoginForm(this.handleLogin);
     this.view.getRegisterForm(this.handleRegister);
   }
 
-  handleLogin = async (data: any) => {
+  handleLogin = async (data: AuthLogin): Promise<void> => {
     const Auth = this.service;
 
     const [user] = await Auth.findLoginUser(data);
+
     if (user) {
       this.handleLoginSuccess(user);
     }
   };
 
-  handleRegister = async (data: any) => {
+  handleRegister = async (data: IAuth): Promise<void> => {
     const Auth = this.service;
 
     const hasUser = await Auth.fildEmailUser(data);
@@ -59,33 +46,26 @@ class AuthController {
     }
   };
 
-  handleLoginSuccess(user: any) {
+  handleLoginSuccess(user: {
+    email: string;
+    id: string;
+    password?: string;
+  }): void {
     const AppView = this.appView;
     const AuthService = this.service;
-    const TodoService = this.todoService;
-    const TodoView = this.todoView;
-    const TodoController = this.todoControll;
 
+    // delete password before saving in localStorage
     delete user.password;
     AuthService.loginSuccess(user);
 
     if (user) {
-      const todoControll = new TodoController(
-        new TodoService(),
-        new TodoView(),
-        AppView
-      );
-
-      todoControll.handleRenderTodo();
+      renderTodo();
     }
   }
 
-  handleCheckLogin = async () => {
+  handleCheckLogin = async (): Promise<void> => {
     const Auth = this.service;
     const AppView = this.appView;
-    const TodoService = this.todoService;
-    const TodoView = this.todoView;
-    const TodoController = this.todoControll;
 
     const userJson = getLocalStorage(KEY.LOCALSTORAGE_UESR);
 
@@ -97,13 +77,7 @@ class AuthController {
     const user = await Auth.fildEmailUser(userJson);
     if (user) {
       AppView.createTodoPage();
-      const todoControll = new TodoController(
-        new TodoService(),
-        new TodoView(),
-        AppView
-      );
-
-      todoControll.handleRenderTodo();
+      renderTodo();
     }
   };
 }

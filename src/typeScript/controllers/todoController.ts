@@ -1,19 +1,24 @@
 import { ACTION_FORM, KEY, PAGE } from "../constants/enum";
+import { ITodo, ITodoParam } from "../constants/interface";
 import { handleCreateId } from "../helper/createId";
 import { getLocalStorage, clearLocalStorage } from "../helper/localStorage";
 
-class TodoController {
-  service: any;
-  view: any;
-  appView: any;
+import TodoService from "../services/todo.service";
+import AppView from "../views/appView";
+import TodoView from "../views/todoView";
 
-  constructor(_service: any, _view: any, _appView: any) {
-    this.service = _service;
-    this.view = _view;
-    this.appView = _appView;
+class TodoController {
+  service: TodoService;
+  view: TodoView;
+  appView: AppView;
+
+  constructor({ TodoService, TodoView, AppView }: ITodoParam) {
+    this.service = TodoService;
+    this.view = TodoView;
+    this.appView = AppView;
   }
 
-  handleRenderTodo = async () => {
+  handleRenderTodo = async (): Promise<void> => {
     const TodoView = this.view;
     TodoView.logOutView(this.handleLogout);
 
@@ -33,7 +38,7 @@ class TodoController {
     TodoView.activeTodoWhenDone(this.handleActiveWhenDone);
   }
 
-  handleGetTodos = async () => {
+  handleGetTodos = async (): Promise<void> => {
     const TodoService = this.service;
 
     const TodoView = this.view;
@@ -45,7 +50,7 @@ class TodoController {
     TodoView.displayTodos(TodoService.todos);
   };
 
-  handlesubmit = (todo: any, action: any) => {
+  handlesubmit = (todo: string, action: ACTION_FORM) => {
     if (action === ACTION_FORM.ADD) {
       this.handleAddTodo(todo);
     } else if (action === ACTION_FORM.UPDATE) {
@@ -53,53 +58,53 @@ class TodoController {
     }
   };
 
-  handleAddTodo = async (todo: any) => {
+  handleAddTodo = async (todo: string): Promise<void> => {
     const TodoService = this.service;
     const TodoView = this.view;
 
     const { email } = getLocalStorage(KEY.LOCALSTORAGE_UESR);
 
-    const todoItem = {
+    const todoItem: ITodo = {
       id: handleCreateId(),
       email,
       title: todo,
       complete: false,
     };
 
-    this.view.disableTodoView("add");
+    TodoView.disableTodoView(true);
     const data = await TodoService.addTodo(todoItem);
 
     if (data) {
-      // get id of new todo when just  add
+      // get id of new todo when add
       TodoView.displayTodos(TodoService.todos);
     }
     this.renderNewTodoWhenChange();
   };
 
-  handleUpdateTodo = async (todo: any) => {
+  handleUpdateTodo = async (todo: string): Promise<void> => {
     const TodoService = this.service;
     const TodoView = this.view;
     const id = getLocalStorage(KEY.LOCALSTORAGE_ID_UPDATE);
 
-    this.view.disableTodoView("update");
+    this.view.disableTodoView(true);
 
     const data = await TodoService.updateTodo(id, { title: todo });
 
     if (data) {
-      TodoService.todos.forEach((itemTodo: any) => {
+      TodoService.todos.forEach((itemTodo: ITodo) => {
         if (itemTodo.id === id) {
           itemTodo.title = todo;
         }
       });
       TodoView.resetFormTodoView();
       clearLocalStorage(KEY.LOCALSTORAGE_ID_UPDATE);
-      // get id of new todo when just  add
+      // get id of new todo when add
       TodoView.displayTodos(TodoService.todos);
     }
     this.renderNewTodoWhenChange();
   };
 
-  handleActiveWhenDone = async (id: any, status: any) => {
+  handleActiveWhenDone = async (id: string, status: boolean): Promise<void> => {
     const TodoService = this.service;
     const TodoView = this.view;
 
@@ -110,7 +115,7 @@ class TodoController {
     TodoView.disableTodoView(clearDisable);
   };
 
-  handleRemoveTodo = async (id: any) => {
+  handleRemoveTodo = async (id: string): Promise<void> => {
     const TodoService = this.service;
     const TodoView = this.view;
 
