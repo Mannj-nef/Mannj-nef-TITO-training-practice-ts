@@ -1,22 +1,18 @@
-import AuthController from "../controllers/authController";
-import TodoController from "../controllers/todoController";
-import AuthService from "../services/auth.service";
-import TodoService from "../services/todo.service";
 import AppView from "../views/appView";
-import AuthView from "../views/authView";
-import TodoView from "../views/todoView";
 
-const param: any = {
+// auth
+import AuthController from "../controllers/authController";
+import AuthService from "../services/auth.service";
+import AuthView from "../views/authView";
+import { IAuthParam } from "../constants/interface";
+
+const authParam: IAuthParam = {
   AuthService: new AuthService(),
   AuthView: new AuthView(),
   AppView: new AppView(),
-
-  TodoController,
-  TodoService,
-  TodoView,
 };
 
 // eslint-disable-next-line no-unused-vars
-const app: any = new AppView();
+const app: AppView = new AppView();
 // eslint-disable-next-line no-unused-vars
-const auth: any = new AuthController(param);
+const auth: AuthController = new AuthController(authParam);
