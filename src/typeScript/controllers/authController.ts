@@ -49,7 +49,7 @@ class AuthController {
     }
   };
 
-  handleLoginSuccess(user: IAuth): void {
+  handleLoginSuccess(user: AuthLocalStorage): void {
     const AuthService = this.service;
 
     // delete password before saving in localStorage

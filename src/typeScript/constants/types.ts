@@ -1,6 +1,11 @@
-import { IAuth } from "./interface";
+import { IAuth, IForm } from "./interface";
 
 export type AuthLogin = Omit<IAuth, "id" | "confirmPassword">;
-export type AuthLocalStorage = Omit<IAuth, "password" | "confirmPassword">;
+export type AuthLocalStorage = Omit<IAuth, "password" | "confirmPassword"> & {
+  password?: string;
+};
+export type AuthForm = Omit<IAuth, "id">;
 
 export type TodoData = { title: string } | { complete: boolean };
+
+export type Form = IForm[keyof IForm];

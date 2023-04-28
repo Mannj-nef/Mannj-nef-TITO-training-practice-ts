@@ -27,7 +27,7 @@ class TodoService {
         this.todos = data.map((todo: ITodo) => new TodoSchema(todo));
       }
     } catch (error) {
-      this.AppView.createToast(TOAST.ERROR(error));
+      this.AppView.createToast(TOAST.ERROR(error as string));
     }
   }
 
@@ -41,7 +41,7 @@ class TodoService {
         this.todos = data.map((todo: ITodo) => new TodoSchema(todo));
       }
     } catch (error) {
-      this.AppView.createToast(TOAST.ERROR(error));
+      this.AppView.createToast(TOAST.ERROR(error as string));
     }
   }
 
@@ -57,7 +57,7 @@ class TodoService {
       this.AppView.createToast(TOAST.SUCCESS(MESSAGE.ADD_TODO_SUCCESS));
       return data;
     } catch (error) {
-      this.AppView.createToast(TOAST.ERROR(error));
+      this.AppView.createToast(TOAST.ERROR(error as string));
       throw error;
     }
   }
@@ -73,7 +73,7 @@ class TodoService {
       this.AppView.createToast(TOAST.SUCCESS(MESSAGE.UPDATE_TODO_SUCCESS));
       return data;
     } catch (error) {
-      this.AppView.createToast(TOAST.ERROR(error));
+      this.AppView.createToast(TOAST.ERROR(error as string));
       throw error;
     }
   }
@@ -85,7 +85,7 @@ class TodoService {
       this.todos = this.todos.filter((todo: ITodo) => todo.id !== id);
       this.AppView.createToast(TOAST.SUCCESS(MESSAGE.DELETE_TODO_SUCCESS));
     } catch (error) {
-      this.AppView.createToast(TOAST.ERROR(error));
+      this.AppView.createToast(TOAST.ERROR(error as string));
     }
   }
 

@@ -7,9 +7,10 @@ import TodoView from "../views/todoView";
 export interface IAuth {
   id: number;
   email: string;
-  password?: string;
+  password: string;
   confirmPassword?: string;
 }
+
 export interface IAuthParam {
   AuthService: AuthService;
   AuthView: AuthView;
@@ -28,4 +29,16 @@ export interface ITodoParam {
   TodoService: TodoService;
   TodoView: TodoView;
   AppView: AppView;
+}
+
+//
+
+export interface IForm {
+  email: "email";
+  password: "password";
+  confirmpassword: "confirm-password";
+
+  input: "input";
+  blur: "blur";
+  focus: "focus";
 }

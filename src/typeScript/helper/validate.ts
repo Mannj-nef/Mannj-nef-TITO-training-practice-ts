@@ -1,9 +1,10 @@
 import ERROR_VALIDATE from "../constants/errorMessage";
+import { Form } from "../constants/types";
 import VALIDATE from "../constants/validateSchema";
 
 const validateEvenError = {
   // even
-  input: (name: any, textErrorElm: any) => {
+  input: (name: Form, textErrorElm: HTMLElement) => {
     switch (name) {
       case "email":
         textErrorElm.textContent = ERROR_VALIDATE.EMAIL_NOT_VALID;
@@ -15,7 +16,7 @@ const validateEvenError = {
         break;
     }
   },
-  blur: (name: any, textErrorElm: any) => {
+  blur: (name: Form, textErrorElm: HTMLElement) => {
     switch (name) {
       case "email":
         textErrorElm.textContent = ERROR_VALIDATE.EMAIL_REQUIRED;
@@ -29,25 +30,31 @@ const validateEvenError = {
   },
 };
 
-function validate(formElm: any, className: any) {
-  const inputControls = formElm.querySelectorAll(className);
+function validate(formElm: HTMLFormElement, className: string) {
+  const inputControls = formElm.querySelectorAll(
+    className
+  ) as NodeListOf<HTMLInputElement>;
 
   [...inputControls].forEach((inputItem) => {
-    inputItem.addEventListener("input", (e: any) =>
+    inputItem.addEventListener("input", (e: Event) =>
       handleInput(e, "input", inputControls)
     );
-    inputItem.addEventListener("blur", (e: any) =>
+    inputItem.addEventListener("blur", (e: FocusEvent) =>
       handleInput(e, "blur", inputControls)
     );
-    inputItem.addEventListener("focus", (e: any) =>
+    inputItem.addEventListener("focus", (e: FocusEvent) =>
       handleInput(e, "focus", inputControls)
     );
   });
 
-  function handleInput(e: any, paramenter: any, inputs: any) {
+  function handleInput(
+    e: Event,
+    paramenter: Form,
+    inputs: NodeListOf<HTMLInputElement>
+  ) {
     const inputPassword = inputs[1];
-    const inputTarget = e.target;
-    const textErrorElm = inputTarget.nextElementSibling;
+    const inputTarget = e.target as HTMLInputElement;
+    const textErrorElm = inputTarget.nextElementSibling as HTMLElement;
     const valueInput = inputTarget.value;
 
     if (paramenter === "input") {
@@ -55,14 +62,14 @@ function validate(formElm: any, className: any) {
         inputTarget.classList.remove("border-invalid");
         inputTarget.classList.remove("invalid");
       } else {
-        validateEvenError.input(inputTarget.name, textErrorElm);
+        validateEvenError.input(inputTarget.name as Form, textErrorElm);
       }
       checkInput(inputTarget, valueInput, inputPassword);
     }
 
     if (paramenter === "blur") {
       if (valueInput.length <= 0) {
-        validateEvenError.blur(inputTarget.name, textErrorElm);
+        validateEvenError.blur(inputTarget.name as Form, textErrorElm);
       }
       checkInput(inputTarget, valueInput, inputPassword);
     }
@@ -73,11 +80,15 @@ function validate(formElm: any, className: any) {
   }
 }
 
-function checkInput(inputTarget: any, value: any, inputPassword: any) {
+function checkInput(
+  inputTarget: HTMLInputElement,
+  value: string,
+  inputPassword: HTMLInputElement
+) {
   const regexEmail = VALIDATE.EMAIL;
 
+  const textErrorElm = inputTarget.nextElementSibling as HTMLDivElement;
   const inputName = inputTarget.name;
-  const textErrorElm = inputTarget.nextElementSibling;
 
   switch (inputName) {
     case "email": {
@@ -103,7 +114,11 @@ function checkInput(inputTarget: any, value: any, inputPassword: any) {
   }
 }
 
-function handleValid(condition: any, input: any, classInvalid: any) {
+function handleValid(
+  condition: boolean,
+  input: HTMLInputElement,
+  classInvalid: string
+) {
   if (condition) {
     input.classList.remove(classInvalid);
   } else {
