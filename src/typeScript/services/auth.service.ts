@@ -7,7 +7,7 @@ import MESSAGE from "../constants/message";
 import { setLocalStorage } from "../helper/localStorage";
 import TOAST from "../helper/toast";
 import { IAuth } from "../constants/interface";
-import { AuthLogin } from "../constants/types";
+import { AuthLocalStorage, AuthLogin } from "../constants/types";
 
 class AuthService {
   user: IAuth | {};
@@ -27,7 +27,7 @@ class AuthService {
       const { data }: { data: IAuth[] } = await axios.get(endpointUrl);
       return data;
     } catch (error) {
-      this.AppView.createToast(TOAST.ERROR(error));
+      this.AppView.createToast(TOAST.ERROR(error as string));
       throw error;
     }
   }
@@ -45,7 +45,7 @@ class AuthService {
 
       return user;
     } catch (error) {
-      this.AppView.createToast(TOAST.ERROR(error));
+      this.AppView.createToast(TOAST.ERROR(error as string));
       throw error;
     }
   }
@@ -57,7 +57,7 @@ class AuthService {
 
       return user;
     } catch (error) {
-      this.AppView.createToast(TOAST.ERROR(error));
+      this.AppView.createToast(TOAST.ERROR(error as string));
       throw error;
     }
   }
@@ -83,12 +83,12 @@ class AuthService {
 
       return data;
     } catch (error) {
-      this.AppView.createToast(TOAST.ERROR(error));
+      this.AppView.createToast(TOAST.ERROR(error as string));
       throw error;
     }
   }
 
-  loginSuccess = (user: IAuth): void => {
+  loginSuccess = (user: AuthLocalStorage): void => {
     setLocalStorage(KEY.LOCALSTORAGE_UESR, user);
     this.AppView.createToast(TOAST.SUCCESS(MESSAGE.LOGIN_SUCCESS));
 
