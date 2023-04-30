@@ -1,11 +1,12 @@
-import { FORM } from "../constants/enum";
+import { ACTION_FORM, FORM } from "../constants/enum";
+import { IAuth } from "../constants/interface";
 import { AuthForm } from "../constants/types";
 import debounce from "./debounce";
 import { validate } from "./validate";
 
 export const handleFormLogin = (
   formElm: HTMLFormElement,
-  handler: (value: AuthForm) => void,
+  handler: (value: AuthForm) => Promise<void>,
   type: FORM = FORM.LOGIN
 ): void => {
   const formClassName = ".form-input";
@@ -63,7 +64,7 @@ export const handleFormTodo = (
     const actionElm = formElm.querySelector(".action-todo") as HTMLSpanElement;
     const input = queryInputForm(formElm, "input-todo");
 
-    const action = actionElm.textContent;
+    const action = actionElm.textContent as ACTION_FORM;
     const inputValue = input.value.trim();
 
     if (inputValue.length <= 0) {
