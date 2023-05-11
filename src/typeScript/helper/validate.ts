@@ -1,10 +1,10 @@
+import { FORM, FORM_EVEN } from "../constants/enum";
 import ERROR_VALIDATE from "../constants/errorMessage";
-import { Form } from "../constants/types";
 import VALIDATE from "../constants/validateSchema";
 
 const validateEvenError = {
   // even
-  input: (name: Form, textErrorElm: HTMLElement) => {
+  input: (name: FORM, textErrorElm: HTMLElement) => {
     switch (name) {
       case "email":
         textErrorElm.textContent = ERROR_VALIDATE.EMAIL_NOT_VALID;
@@ -16,7 +16,7 @@ const validateEvenError = {
         break;
     }
   },
-  blur: (name: Form, textErrorElm: HTMLElement) => {
+  blur: (name: FORM, textErrorElm: HTMLElement) => {
     switch (name) {
       case "email":
         textErrorElm.textContent = ERROR_VALIDATE.EMAIL_REQUIRED;
@@ -37,19 +37,19 @@ function validate(formElm: HTMLFormElement, className: string) {
 
   [...inputControls].forEach((inputItem) => {
     inputItem.addEventListener("input", (e: Event) =>
-      handleInput(e, "input", inputControls)
+      handleInput(e, FORM_EVEN.INPUT, inputControls)
     );
     inputItem.addEventListener("blur", (e: FocusEvent) =>
-      handleInput(e, "blur", inputControls)
+      handleInput(e, FORM_EVEN.BLUR, inputControls)
     );
     inputItem.addEventListener("focus", (e: FocusEvent) =>
-      handleInput(e, "focus", inputControls)
+      handleInput(e, FORM_EVEN.FOCUS, inputControls)
     );
   });
 
   function handleInput(
     e: Event,
-    paramenter: Form,
+    paramenter: FORM_EVEN,
     inputs: NodeListOf<HTMLInputElement>
   ) {
     const inputPassword = inputs[1];
@@ -62,14 +62,14 @@ function validate(formElm: HTMLFormElement, className: string) {
         inputTarget.classList.remove("border-invalid");
         inputTarget.classList.remove("invalid");
       } else {
-        validateEvenError.input(inputTarget.name as Form, textErrorElm);
+        validateEvenError.input(inputTarget.name as FORM, textErrorElm);
       }
       checkInput(inputTarget, valueInput, inputPassword);
     }
 
     if (paramenter === "blur") {
       if (valueInput.length <= 0) {
-        validateEvenError.blur(inputTarget.name as Form, textErrorElm);
+        validateEvenError.blur(inputTarget.name as FORM, textErrorElm);
       }
       checkInput(inputTarget, valueInput, inputPassword);
     }
