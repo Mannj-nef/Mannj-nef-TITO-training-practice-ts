@@ -1,6 +1,6 @@
-let timeOut: any;
+let timeOut: NodeJS.Timeout | number;
 
-const debounce = (func: any, delay: number = 2000) => {
+const debounce = (func: Function, delay: number = 2000) => {
   clearTimeout(timeOut);
 
   if (typeof func === "function") {

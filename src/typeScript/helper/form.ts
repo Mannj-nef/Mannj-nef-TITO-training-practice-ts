@@ -1,40 +1,47 @@
 import { FORM } from "../constants/enum";
+import { AuthForm } from "../constants/types";
 import debounce from "./debounce";
 import { validate } from "./validate";
 
 export const handleFormLogin = (
-  formElm: any,
-  handler: any,
-  type: any = FORM.LOGIN
-) => {
+  formElm: HTMLFormElement,
+  handler: (value: AuthForm) => void,
+  type: FORM = FORM.LOGIN
+): void => {
   const formClassName = ".form-input";
   validate(formElm, formClassName);
 
-  formElm.addEventListener("submit", function (e: any) {
-    const inputElms = formElm.querySelectorAll(".form-input");
+  formElm.addEventListener("submit", function (e: SubmitEvent): void {
+    const inputElms = formElm.querySelectorAll(
+      ".form-input"
+    ) as NodeListOf<HTMLInputElement>;
     e.preventDefault();
 
-    const valueItem: any = {
-      email: formElm.elements.email.value.trim().toLowerCase(),
-      password: formElm.elements.password.value.trim(),
+    const email = queryInputForm(formElm, "email");
+    const password = queryInputForm(formElm, "password");
+    const confirmPassword = queryInputForm(formElm, "confirm-password");
+
+    const valueItem: AuthForm = {
+      email: email.value.trim().toLowerCase(),
+      password: password.value.trim(),
     };
 
     if (type === FORM.RESGITER) {
-      valueItem.confirmPassword = formElm.elements["confirm-password"].value;
+      valueItem.confirmPassword = confirmPassword.value;
     }
 
-    const invalid = [...inputElms].some((item) =>
+    const invalid: boolean = [...inputElms].some((item) =>
       item.classList.contains("invalid")
     );
     const emptyValue: boolean = Object.values(valueItem).some(
-      (value: any) => value <= 0
+      (value: string) => value.length <= 0
     );
 
     if (!invalid && !emptyValue) {
-      const button = formElm.querySelector(".submit-form") as any;
+      const button = formElm.querySelector(".submit-form") as HTMLButtonElement;
       button.classList.add("button-loading");
 
-      const submitForm = () => {
+      const submitForm = (): void => {
         button.classList.remove("button-loading");
 
         if (typeof handler === "function") {
@@ -46,25 +53,29 @@ export const handleFormLogin = (
   });
 };
 
-export const handleFormTodo = (formElm: any, disableElm: any, handle: any) => {
-  formElm.addEventListener("submit", function (e: any) {
+export const handleFormTodo = (
+  formElm: HTMLFormElement,
+  disableElm: () => void,
+  handle: (inputValue: string, action: string) => void
+): void => {
+  formElm.addEventListener("submit", function (e: SubmitEvent): void {
     e.preventDefault();
-    const actionElm = formElm.querySelector(".action-todo") as any;
-    const input = formElm.elements["input-todo"];
+    const actionElm = formElm.querySelector(".action-todo") as HTMLSpanElement;
+    const input = queryInputForm(formElm, "input-todo");
 
     const action = actionElm.textContent;
     const inputValue = input.value.trim();
 
-    if (inputValue <= 0) {
+    if (inputValue.length <= 0) {
       input.value = "";
       return;
     }
 
-    const button = formElm.querySelector(".main-btn") as any;
+    const button = formElm.querySelector(".main-btn") as HTMLButtonElement;
     button.classList.add("button-loading");
-    const handleSubmit = () => {
+    const handleSubmit = (): void => {
       button.classList.remove("button-loading");
-      if (typeof handle === "function") {
+      if (typeof handle === "function" && action !== null) {
         handle(inputValue, action);
         input.value = "";
       }
@@ -75,3 +86,8 @@ export const handleFormTodo = (formElm: any, disableElm: any, handle: any) => {
     debounce(handleSubmit, 800);
   });
 };
+
+function queryInputForm(form: HTMLFormElement, name: string): HTMLInputElement {
+  const element = form.querySelector(`input[name=${name}]`) as HTMLInputElement;
+  return element;
+}
