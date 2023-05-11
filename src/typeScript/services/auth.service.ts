@@ -26,7 +26,7 @@ class AuthService {
     try {
       const { data }: { data: IAuth[] } = await axios.get(endpointUrl);
       return data;
-    } catch (error: string | unknown) {
+    } catch (error) {
       this.AppView.createToast(TOAST.ERROR(error as string));
       throw error;
     }
@@ -44,7 +44,7 @@ class AuthService {
       }
 
       return user;
-    } catch (error: string | unknown) {
+    } catch (error) {
       this.AppView.createToast(TOAST.ERROR(error as string));
       throw error;
     }
@@ -56,7 +56,7 @@ class AuthService {
       const user = await this.findUser(condition);
 
       return user;
-    } catch (error: string | unknown) {
+    } catch (error) {
       this.AppView.createToast(TOAST.ERROR(error as string));
       throw error;
     }
@@ -82,7 +82,7 @@ class AuthService {
       this.user = new AuthSchema(data);
 
       return data;
-    } catch (error: string | unknown) {
+    } catch (error) {
       this.AppView.createToast(TOAST.ERROR(error as string));
       throw error;
     }
