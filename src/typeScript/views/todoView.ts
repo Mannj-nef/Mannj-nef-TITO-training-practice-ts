@@ -1,4 +1,5 @@
 import { ACTION_FORM, KEY } from "../constants/enum";
+import { ITodo } from "../constants/interface";
 import debounce from "../helper/debounce";
 import { handleFormTodo } from "../helper/form";
 import { clearLocalStorage, setLocalStorage } from "../helper/localStorage";
@@ -13,21 +14,27 @@ class TodoView {
     }
   }
 
-  displayTodos = (todos: any) => {
-    const todoListElm = document.querySelector(".todo-list") as any;
+  displayTodos = (todos: ITodo[]): void => {
+    const todoListElm = document.querySelector(".todo-list") as HTMLDivElement;
     if (todos.length > 0) {
-      const todoList = todos.map((todoItem: any) => TodoItem(todoItem));
+      const todoList = todos.map((todoItem: ITodo) => TodoItem(todoItem));
       todoListElm.innerHTML = todoList.reverse().join("");
     }
   };
 
-  confirmDelete(id: any, btnTodoConfirm: any, handle: any) {
-    const btnRemove = document.querySelector(".btn-confirm-remove") as any;
+  confirmDelete(
+    id: string,
+    todoConfirm: HTMLDivElement,
+    handle: (id: string) => void
+  ): void {
+    const btnRemove = document.querySelector(
+      ".btn-confirm-remove"
+    ) as HTMLButtonElement;
     const btnCancel = document.querySelector(
       ".btn-confirm-remove-cancel"
-    ) as any;
+    ) as HTMLButtonElement;
 
-    btnRemove.addEventListener("click", (e: any) => {
+    btnRemove.addEventListener("click", (e: MouseEvent): void => {
       e.stopPropagation();
       if (typeof handle === "function") {
         debounce(() => {
@@ -38,38 +45,39 @@ class TodoView {
       }
     });
 
-    btnCancel.addEventListener("click", (e: any) => {
+    btnCancel.addEventListener("click", (e: MouseEvent): void => {
       e.stopPropagation();
       RemoveConfirm();
     });
 
-    function RemoveConfirm() {
-      const confirmParent = btnTodoConfirm.parentNode as any;
-      confirmParent.removeChild(btnTodoConfirm);
+    function RemoveConfirm(): void {
+      const confirmParent = todoConfirm.parentNode as HTMLDivElement;
+      confirmParent.removeChild(todoConfirm);
     }
   }
 
-  getIdDeleteTodo(handle: any) {
-    const todoList = document.querySelector(".todo-list") as any;
+  getIdDeleteTodo(handle: (id: string) => Promise<void>) {
+    const todoList = document.querySelector(".todo-list") as HTMLDivElement;
     if (!todoList) return;
 
     const todoItemsBtnRemove = todoList.querySelectorAll(
       ".btn-remove"
-    ) as NodeListOf<any>;
+    ) as NodeListOf<HTMLButtonElement>;
 
-    [...todoItemsBtnRemove].forEach((btnItem: any) => {
-      btnItem.addEventListener("click", (e: any) => {
+    [...todoItemsBtnRemove].forEach((btnItem: HTMLButtonElement): void => {
+      btnItem.addEventListener("click", (e: MouseEvent) => {
         e.stopPropagation();
 
-        const { target } = e;
+        const target = e.target as HTMLButtonElement;
         const { id } = target.dataset;
 
         const todoConfirmCurrent = document.querySelector(
           ".todo-confirm-delete"
-        );
+        ) as HTMLDivElement;
 
         if (todoConfirmCurrent) {
-          const confirmParrent = todoConfirmCurrent.parentNode as any;
+          const confirmParrent =
+            todoConfirmCurrent.parentNode as HTMLDivElement;
           confirmParrent.removeChild(todoConfirmCurrent);
         }
 
@@ -78,7 +86,7 @@ class TodoView {
         btnItem.insertAdjacentHTML("afterend", TodoConfirm);
         const todoConfirm = document.querySelector(
           ".todo-confirm-delete"
-        ) as any;
+        ) as HTMLDivElement;
 
         if (!id) return;
         this.confirmDelete(id, todoConfirm, handle);
@@ -86,19 +94,21 @@ class TodoView {
     });
   }
 
-  activeTodoWhenDone(handle: any) {
+  activeTodoWhenDone(handle: (id: string, status: boolean) => void): void {
     const todos = document.querySelectorAll(
       ".todo-item"
     ) as NodeListOf<HTMLDivElement>;
     [...todos].forEach((todo) => {
-      todo.addEventListener("click", (e: any) => {
+      todo.addEventListener("click", (e: MouseEvent) => {
         e.stopPropagation();
 
-        const { target } = e;
-        const id = target.dataset.id_todo;
+        const target = e.target as HTMLDivElement;
+        const id = target.dataset.id_todo as string;
         const classChecked = "checkbox-input-checked";
 
-        const checkBoxElm = target.querySelector(".checkbox-input") as any;
+        const checkBoxElm = target.querySelector(
+          ".checkbox-input"
+        ) as HTMLInputElement;
 
         if (checkBoxElm) {
           this.disableTodoView();
@@ -116,47 +126,51 @@ class TodoView {
     });
   }
 
-  getValueUpdateTodoView = () => {
-    const todoList = document.querySelector(".todo-list") as any;
+  getValueUpdateTodoView = (): void => {
+    const todoList = document.querySelector(".todo-list") as HTMLDivElement;
 
     if (!todoList) return;
     const todoItemBtnUpdate = todoList.querySelectorAll(
       ".btn-update"
-    ) as NodeListOf<any>;
+    ) as NodeListOf<HTMLButtonElement>;
     [...todoItemBtnUpdate].forEach((btnUpdate) => {
-      btnUpdate.addEventListener("click", (e: any) => {
+      btnUpdate.addEventListener("click", (e: MouseEvent) => {
         e.stopPropagation();
-        const { target } = e;
+        const target = e.target as HTMLButtonElement;
         const { id } = target.dataset;
-        const todoItem = target.parentNode.parentNode;
+        const todoItem = target.parentNode?.parentNode as HTMLDivElement;
 
         if (!todoItem.classList.contains("todo-item")) return;
 
-        const todoLable = todoItem.querySelector(".checkbox-label") as any;
+        const todoLable = todoItem.querySelector(
+          ".checkbox-label"
+        ) as HTMLLabelElement;
         const todoValue = todoLable.textContent;
 
-        setLocalStorage(KEY.LOCALSTORAGE_ID_UPDATE, id);
+        id && setLocalStorage(KEY.LOCALSTORAGE_ID_UPDATE, id);
 
-        handleForm(todoValue);
+        todoValue && handleForm(todoValue);
       });
     });
 
-    function handleForm(todoValue: any) {
-      const form = document.querySelector(".main-form") as any;
+    function handleForm(todoValue: string): void {
+      const form = document.querySelector(".main-form") as HTMLFormElement;
 
       if (!form) return;
-      const inputTodo = form.querySelector(".main-input") as any;
+      const inputTodo = form.querySelector(".main-input") as HTMLInputElement;
 
       inputTodo.focus();
       inputTodo.value = todoValue.trim();
 
-      const btnRemoveValue = form.querySelector(".btn-remove-form") as any;
+      const btnRemoveValue = form.querySelector(
+        ".btn-remove-form"
+      ) as HTMLButtonElement;
       btnRemoveValue.classList.add("main-update");
 
-      const actionTodo = form.querySelector(".action-todo") as any;
+      const actionTodo = form.querySelector(".action-todo") as HTMLSpanElement;
       actionTodo.textContent = ACTION_FORM.UPDATE;
 
-      btnRemoveValue.addEventListener("click", (e: any) => {
+      btnRemoveValue.addEventListener("click", (e: MouseEvent) => {
         e.stopPropagation();
         inputTodo.value = "";
         actionTodo.textContent = ACTION_FORM.ADD;
@@ -165,18 +179,22 @@ class TodoView {
     }
   };
 
-  resetFormTodoView = () => {
-    const form = document.querySelector(".main-form") as any;
+  resetFormTodoView = (): void => {
+    const form = document.querySelector(".main-form") as HTMLFormElement;
     if (!form) return;
-    const btnRemoveValue = form.querySelector(".btn-remove-form") as any;
-    const actionTodo = form.querySelector(".action-todo") as any;
+    const btnRemoveValue = form.querySelector(
+      ".btn-remove-form"
+    ) as HTMLButtonElement;
+    const actionTodo = form.querySelector(".action-todo") as HTMLSpanElement;
 
     btnRemoveValue.classList.remove("main-update");
     actionTodo.textContent = ACTION_FORM.ADD;
   };
 
-  logOutView = (handle: any) => {
-    const btnLogout = document.querySelector(".header-logout") as any;
+  logOutView = (handle: () => void): void => {
+    const btnLogout = document.querySelector(
+      ".header-logout"
+    ) as HTMLButtonElement;
 
     btnLogout.addEventListener("click", () => {
       clearLocalStorage(KEY.LOCALSTORAGE_UESR);
@@ -187,9 +205,11 @@ class TodoView {
     });
   };
 
-  disableTodoView = (clearDisable = false) => {
-    const todoElm = document.querySelectorAll(".todo-item") as any;
-    const inputMain = document.querySelector(".main-input") as any;
+  disableTodoView = (clearDisable: boolean = false): void => {
+    const todoElm = document.querySelectorAll(
+      ".todo-item"
+    ) as NodeListOf<HTMLDivElement>;
+    const inputMain = document.querySelector(".main-input") as HTMLInputElement;
 
     [...todoElm].forEach((todo) => {
       if (!clearDisable) {
@@ -200,7 +220,7 @@ class TodoView {
       } else {
         todo.classList.remove("disable");
         inputMain.classList.remove("disable");
-        todo.style = "";
+        todo.style.pointerEvents = "";
         inputMain.style.pointerEvents = "";
       }
     });
