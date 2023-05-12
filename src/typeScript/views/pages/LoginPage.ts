@@ -1,4 +1,4 @@
-function LoginPage(SignInPage: any, SignUpPage: any) {
+function LoginPage(SignInPage: () => string, SignUpPage: () => string) {
   return ` <div class="login">
     ${SignInPage ? SignInPage() : ""}
     ${SignUpPage ? SignUpPage() : ""}
