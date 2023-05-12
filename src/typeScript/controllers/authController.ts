@@ -5,7 +5,7 @@ import AuthService from "../services/auth.service";
 import AuthView from "../views/authView";
 import AppView from "../views/appView";
 
-import { AuthLocalStorage, AuthLogin } from "../constants/types";
+import { AuthForm, AuthLocalStorage, AuthLogin } from "../constants/types";
 import { IAuth, IAuthParam } from "../constants/interface";
 import renderTodo from "../helper/renderTodo";
 
@@ -34,7 +34,7 @@ class AuthController {
     }
   };
 
-  handleRegister = async (data: IAuth): Promise<void> => {
+  handleRegister = async (data: AuthForm): Promise<void> => {
     const Auth = this.service;
 
     const hasUser = await Auth.fildEmailUser(data);

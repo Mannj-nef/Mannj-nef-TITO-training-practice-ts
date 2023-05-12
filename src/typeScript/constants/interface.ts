@@ -30,15 +30,3 @@ export interface ITodoParam {
   TodoView: TodoView;
   AppView: AppView;
 }
-
-//
-
-export interface IForm {
-  email: "email";
-  password: "password";
-  confirmpassword: "confirm-password";
-
-  input: "input";
-  blur: "blur";
-  focus: "focus";
-}
