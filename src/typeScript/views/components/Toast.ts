@@ -1,4 +1,3 @@
-import { type } from "os";
 import { TOAST } from "../../constants/enum";
 
 interface IIcon {

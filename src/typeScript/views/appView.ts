@@ -4,7 +4,6 @@ import SignUp from "./modules/signUp/SignUp";
 import TodoPage from "./pages/TodoPage";
 import { PAGE } from "../constants/enum";
 import debounce from "../helper/debounce";
-import { Toast } from "../constants/types";
 
 class AppView {
   createLogin = (): void => {
