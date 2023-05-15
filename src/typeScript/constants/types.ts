@@ -1,5 +1,5 @@
 import { TOAST } from "../enums";
-import { IAuth, ITodo } from "./interface";
+import { IAuth, ITodo } from "../interfaces";
 
 export type localStorageData = AuthLocalStorage | string;
 export type Toast = {
