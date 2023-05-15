@@ -2,7 +2,7 @@ import LoginPage from "./pages/LoginPage";
 import SignIn from "./modules/signIn/SignIn";
 import SignUp from "./modules/signUp/SignUp";
 import TodoPage from "./pages/TodoPage";
-import { PAGE } from "../constants/enum";
+import { PAGE } from "../enums";
 import debounce from "../helper/debounce";
 
 class AppView {

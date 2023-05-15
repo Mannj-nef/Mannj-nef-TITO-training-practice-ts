@@ -1,4 +1,4 @@
-import { ACTION_FORM, FORM } from "../constants/enum";
+import { ACTION_FORM, FORM } from "../enums";
 import { AuthForm } from "../constants/types";
 import debounce from "./debounce";
 import { validate } from "./validate";

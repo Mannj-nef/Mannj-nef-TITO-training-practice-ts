@@ -2,7 +2,7 @@ import axios from "axios";
 import AuthSchema from "../models/authModel";
 
 import AppView from "../views/appView";
-import { KEY, PAGE } from "../constants/enum";
+import { KEY, PAGE } from "../enums";
 import MESSAGE from "../constants/message";
 import { setLocalStorage } from "../helper/localStorage";
 import TOAST from "../helper/toast";

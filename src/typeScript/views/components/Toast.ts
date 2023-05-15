@@ -1,4 +1,4 @@
-import { TOAST } from "../../constants/enum";
+import { TOAST } from "../../enums";
 
 interface IIcon {
   success: "ti-check";

@@ -1,4 +1,4 @@
-import { KEY } from "../constants/enum";
+import { KEY } from "../enums";
 
 import { localStorageData } from "../constants/types";
 

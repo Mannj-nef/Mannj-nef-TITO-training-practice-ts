@@ -1,4 +1,4 @@
-import { KEY } from "../constants/enum";
+import { KEY } from "../enums";
 import { getLocalStorage } from "../helper/localStorage";
 
 import AuthService from "../services/auth.service";
