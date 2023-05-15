@@ -1,4 +1,4 @@
-import { FORM, FORM_EVEN } from "../constants/enum";
+import { FORM, FORM_EVEN } from "../enums";
 import ERROR_VALIDATE from "../constants/errorMessage";
 import VALIDATE from "../constants/validateSchema";
 

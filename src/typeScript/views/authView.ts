@@ -1,7 +1,6 @@
 import { handleFormLogin } from "../helper/form";
-import { FORM } from "../constants/enum";
+import { FORM } from "../enums";
 import { AuthForm, AuthLogin } from "../constants/types";
-import { IAuth } from "../constants/interface";
 
 class AuthView {
   constructor() {

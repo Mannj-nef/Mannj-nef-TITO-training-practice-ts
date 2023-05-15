@@ -1,5 +1,5 @@
 import Toast from "../views/components/Toast";
-import { TOAST as TOAST_TYPE } from "../constants/enum";
+import { TOAST as TOAST_TYPE } from "../enums";
 import { Toast as ToastType } from "../constants/types";
 
 const TOAST: ToastType = {
