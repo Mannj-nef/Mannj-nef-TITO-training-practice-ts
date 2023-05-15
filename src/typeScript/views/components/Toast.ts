@@ -6,14 +6,14 @@ interface IIcon {
 }
 
 function Toast(
-  type: string = "error",
+  type: TOAST = TOAST.ERROR,
   message: string = "TypeError: Failed to fetch"
 ) {
   const icons: IIcon = {
     [TOAST.SUCCESS]: "ti-check",
     [TOAST.ERROR]: "ti-close",
   };
-  const icon: "ti-check" | "ti-close" = icons[type as TOAST];
+  const icon: "ti-check" | "ti-close" = icons[type];
 
   return `
     <div class="toast-item toast-${type}">

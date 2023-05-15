@@ -56,7 +56,7 @@ export const handleFormLogin = (
 export const handleFormTodo = (
   formElm: HTMLFormElement,
   disableElm: () => void,
-  handle: (inputValue: string, action: string) => void
+  handle: (inputValue: string, action: ACTION_FORM) => void
 ): void => {
   formElm.addEventListener("submit", function (e: SubmitEvent): void {
     e.preventDefault();

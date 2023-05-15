@@ -26,6 +26,7 @@ const links: ILinks[] = [
     href: "#",
   },
 ];
+
 function Header() {
   return `
     <header class="header">

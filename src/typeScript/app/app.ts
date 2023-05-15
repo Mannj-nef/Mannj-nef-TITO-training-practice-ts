@@ -12,7 +12,5 @@ const authParam: IAuthParam = {
   AppView: new AppView(),
 };
 
-// eslint-disable-next-line no-unused-vars
-const app: AppView = new AppView();
-// eslint-disable-next-line no-unused-vars
-const auth: AuthController = new AuthController(authParam);
+new AppView();
+new AuthController(authParam);
