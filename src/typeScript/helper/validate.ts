@@ -6,25 +6,23 @@ const validateEvenError = {
   // even
   input: (name: FORM, textErrorElm: HTMLElement) => {
     switch (name) {
-      case "email":
+      case FORM.EMAIL:
         textErrorElm.textContent = ERROR_VALIDATE.EMAIL_NOT_VALID;
         break;
-      case "password":
-        textErrorElm.textContent = ERROR_VALIDATE.PASS_MIN_LENGTH;
-        break;
+      case FORM.PASSWORD:
       default:
+        textErrorElm.textContent = ERROR_VALIDATE.PASS_MIN_LENGTH;
         break;
     }
   },
   blur: (name: FORM, textErrorElm: HTMLElement) => {
     switch (name) {
-      case "email":
+      case FORM.EMAIL:
         textErrorElm.textContent = ERROR_VALIDATE.EMAIL_REQUIRED;
         break;
-      case "password":
-        textErrorElm.textContent = ERROR_VALIDATE.PASS_REQUIRED;
-        break;
+      case FORM.PASSWORD:
       default:
+        textErrorElm.textContent = ERROR_VALIDATE.PASS_REQUIRED;
         break;
     }
   },
@@ -57,7 +55,7 @@ function validate(formElm: HTMLFormElement, className: string) {
     const textErrorElm = inputTarget.nextElementSibling as HTMLElement;
     const valueInput = inputTarget.value;
 
-    if (paramenter === "input") {
+    if (paramenter === FORM_EVEN.INPUT) {
       if (valueInput.length === 0) {
         inputTarget.classList.remove("border-invalid");
         inputTarget.classList.remove("invalid");
@@ -67,14 +65,14 @@ function validate(formElm: HTMLFormElement, className: string) {
       checkInput(inputTarget, valueInput, inputPassword);
     }
 
-    if (paramenter === "blur") {
+    if (paramenter === FORM_EVEN.BLUR) {
       if (valueInput.length <= 0) {
         validateEvenError.blur(inputTarget.name as FORM, textErrorElm);
       }
       checkInput(inputTarget, valueInput, inputPassword);
     }
 
-    if (paramenter === "focus") {
+    if (paramenter === FORM_EVEN.FOCUS) {
       inputTarget.classList.remove("invalid");
     }
   }
@@ -88,29 +86,27 @@ function checkInput(
   const regexEmail = VALIDATE.EMAIL;
 
   const textErrorElm = inputTarget.nextElementSibling as HTMLDivElement;
-  const inputName = inputTarget.name;
+  const inputName = inputTarget.name as FORM;
 
   switch (inputName) {
-    case "email": {
+    case FORM.EMAIL: {
       const validateEmail = regexEmail.test(value);
       handleValid(validateEmail, inputTarget, "invalid");
       break;
     }
-    case "password" || "text": {
+    case FORM.PASSWORD || "text": {
       const validatePassword = value.length >= VALIDATE.PASS_MIN;
       handleValid(validatePassword, inputTarget, "invalid");
       break;
     }
-    case "confirm-password": {
+    case FORM.CONFIRMPASSWORD:
+    default: {
       const passwordValue = inputPassword.value;
       const validateConfirmPassword = value === passwordValue;
       handleValid(validateConfirmPassword, inputTarget, "invalid");
       textErrorElm.textContent = ERROR_VALIDATE.PASS_NOT_MATCH;
       break;
     }
-
-    default:
-      break;
   }
 }
 

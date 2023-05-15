@@ -98,7 +98,6 @@ class AuthService {
   accountExists = (hasUser: IAuth): void => {
     if (hasUser) {
       this.AppView.createToast(TOAST.ERROR(MESSAGE.ACCOUNT_EXISTS));
-      return;
     }
   };
 }

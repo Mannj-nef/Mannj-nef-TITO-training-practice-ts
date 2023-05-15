@@ -7,8 +7,8 @@ import TodoConfirmDelete from "./modules/todoList/TodoConfirmDelete";
 import TodoItem from "./modules/todoList/TodoItem";
 
 class TodoView {
-  getValueInput(handle: any) {
-    const form = document.querySelector(".main-form") as any;
+  getValueInput(handle: (inputValue: string, action: ACTION_FORM) => void) {
+    const form = document.querySelector(".main-form") as HTMLFormElement;
     if (form) {
       handleFormTodo(form, this.disableTodoView, handle);
     }
@@ -110,7 +110,7 @@ class TodoView {
           ".checkbox-input"
         ) as HTMLInputElement;
 
-        if (checkBoxElm) {
+        if (!!checkBoxElm) {
           this.disableTodoView();
 
           debounce(() => {
