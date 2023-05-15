@@ -6,7 +6,7 @@ import { KEY, PAGE } from "../enums";
 import MESSAGE from "../constants/message";
 import { setLocalStorage } from "../helper/localStorage";
 import TOAST from "../helper/toast";
-import { IAuth } from "../constants/interface";
+import { IAuth } from "../interfaces";
 import { AuthLocalStorage, AuthLogin } from "../constants/types";
 
 class AuthService {

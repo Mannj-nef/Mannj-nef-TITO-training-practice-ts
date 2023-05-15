@@ -1,4 +1,4 @@
-import { IAuth } from "../constants/interface";
+import { IAuth } from "../interfaces";
 
 class AuthSchema {
   id: number;

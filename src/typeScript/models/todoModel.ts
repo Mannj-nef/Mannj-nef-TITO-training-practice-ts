@@ -1,4 +1,4 @@
-import { ITodo } from "../constants/interface";
+import { ITodo } from "../interfaces";
 
 class TodoSchema {
   id: string;

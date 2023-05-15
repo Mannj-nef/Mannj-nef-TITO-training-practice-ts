@@ -6,7 +6,7 @@ import AuthView from "../views/authView";
 import AppView from "../views/appView";
 
 import { AuthForm, AuthLocalStorage, AuthLogin } from "../constants/types";
-import { IAuth, IAuthParam } from "../constants/interface";
+import { IAuthParam } from "../interfaces";
 import renderTodo from "../helper/renderTodo";
 
 class AuthController {
