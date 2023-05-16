@@ -5,7 +5,7 @@ import TodoSchema from "../models/todoModel";
 import TOAST from "../helper/toast";
 import MESSAGE from "../constants/message";
 import { ITodo } from "../interfaces";
-import { TodoData } from "../constants/types";
+import { TodoData } from "../types";
 
 class TodoService {
   todos: ITodo[];

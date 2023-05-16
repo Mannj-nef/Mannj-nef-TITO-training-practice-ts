@@ -1,6 +1,6 @@
 import { KEY } from "../enums";
 
-import { localStorageData } from "../constants/types";
+import { localStorageData } from "../types";
 
 const getLocalStorage = (key: KEY) =>
   (localStorage.getItem(key) && JSON.parse(localStorage.getItem(key) || "")) ||

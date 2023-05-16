@@ -1,6 +1,6 @@
 import { handleFormLogin } from "../helper/form";
 import { FORM } from "../enums";
-import { AuthForm, AuthLogin } from "../constants/types";
+import { AuthForm, AuthLogin } from "../types";
 
 class AuthView {
   constructor() {

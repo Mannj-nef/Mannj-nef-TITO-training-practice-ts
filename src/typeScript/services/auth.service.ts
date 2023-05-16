@@ -7,7 +7,7 @@ import MESSAGE from "../constants/message";
 import { setLocalStorage } from "../helper/localStorage";
 import TOAST from "../helper/toast";
 import { IAuth } from "../interfaces";
-import { AuthLocalStorage, AuthLogin } from "../constants/types";
+import { AuthLocalStorage, AuthLogin } from "../types";
 
 class AuthService {
   user: IAuth | {};
