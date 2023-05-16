@@ -1,5 +1,5 @@
 import { ACTION_FORM, KEY } from "../enums";
-import { ITodo } from "../constants/interface";
+import { ITodo } from "../interfaces";
 import debounce from "../helper/debounce";
 import { handleFormTodo } from "../helper/form";
 import { clearLocalStorage, setLocalStorage } from "../helper/localStorage";

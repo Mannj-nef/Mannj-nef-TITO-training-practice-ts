@@ -1,5 +1,5 @@
 import { ACTION_FORM, KEY, PAGE } from "../enums";
-import { ITodo, ITodoParam } from "../constants/interface";
+import { ITodo, ITodoParam } from "../interfaces";
 import { handleCreateId } from "../helper/createId";
 import { getLocalStorage, clearLocalStorage } from "../helper/localStorage";
 

@@ -1,4 +1,4 @@
-import { ITodoParam } from "../constants/interface";
+import { ITodoParam } from "../interfaces";
 import TodoController from "../controllers/todoController";
 import TodoService from "../services/todo.service";
 import AppView from "../views/appView";
