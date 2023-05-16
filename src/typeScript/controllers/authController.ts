@@ -5,7 +5,7 @@ import AuthService from "../services/auth.service";
 import AuthView from "../views/authView";
 import AppView from "../views/appView";
 
-import { AuthForm, AuthLocalStorage, AuthLogin } from "../constants/types";
+import { AuthForm, AuthLocalStorage, AuthLogin } from "../types";
 import { IAuthParam } from "../interfaces";
 import renderTodo from "../helper/renderTodo";
 

@@ -1,4 +1,4 @@
-import { TodoItem } from "../../../constants/types";
+import { TodoItem } from "../../../types";
 
 function TodoItem({
   id = "",

@@ -1,5 +1,5 @@
 import { ACTION_FORM, FORM } from "../enums";
-import { AuthForm } from "../constants/types";
+import { AuthForm } from "../types";
 import debounce from "./debounce";
 import { validate } from "./validate";
 
