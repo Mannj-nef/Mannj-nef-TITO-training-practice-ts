@@ -70,6 +70,7 @@ class AuthView {
     const InputPasswordSignIn = document.querySelector(
       "#password-signIn"
     ) as HTMLInputElement;
+
     // sign up
     const regesterForm = document.querySelector(
       "#form-sign-up"
@@ -78,15 +79,10 @@ class AuthView {
       "#password-signUp"
     ) as HTMLInputElement;
 
-    if (loginForm || regesterForm) {
-      handleShow(loginForm, InputPasswordSignIn);
-      handleShow(regesterForm, InputPasswordSignUp);
-    }
-
-    function handleShow(
+    const handleShow = (
       formElm: HTMLFormElement,
       InputPassword: HTMLInputElement
-    ): void {
+    ): void => {
       const iconShow = formElm.querySelector(
         ".show-password"
       ) as HTMLDivElement;
@@ -98,6 +94,11 @@ class AuthView {
           InputPassword.setAttribute("type", "password");
         }
       });
+    };
+
+    if (loginForm || regesterForm) {
+      handleShow(loginForm, InputPasswordSignIn);
+      handleShow(regesterForm, InputPasswordSignUp);
     }
   };
 }

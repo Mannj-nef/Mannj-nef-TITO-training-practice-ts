@@ -28,61 +28,23 @@ const validateEvenError = {
   },
 };
 
-function validate(formElm: HTMLFormElement, className: string) {
-  const inputControls = formElm.querySelectorAll(
-    className
-  ) as NodeListOf<HTMLInputElement>;
-
-  [...inputControls].forEach((inputItem) => {
-    inputItem.addEventListener("input", (e: Event) =>
-      handleInput(e, FORM_EVEN.INPUT, inputControls)
-    );
-    inputItem.addEventListener("blur", (e: FocusEvent) =>
-      handleInput(e, FORM_EVEN.BLUR, inputControls)
-    );
-    inputItem.addEventListener("focus", (e: FocusEvent) =>
-      handleInput(e, FORM_EVEN.FOCUS, inputControls)
-    );
-  });
-
-  function handleInput(
-    e: Event,
-    paramenter: FORM_EVEN,
-    inputs: NodeListOf<HTMLInputElement>
-  ) {
-    const inputPassword = inputs[1];
-    const inputTarget = e.target as HTMLInputElement;
-    const textErrorElm = inputTarget.nextElementSibling as HTMLElement;
-    const valueInput = inputTarget.value;
-
-    if (paramenter === FORM_EVEN.INPUT) {
-      if (valueInput.length === 0) {
-        inputTarget.classList.remove("border-invalid");
-        inputTarget.classList.remove("invalid");
-      } else {
-        validateEvenError.input(inputTarget.name as FORM, textErrorElm);
-      }
-      checkInput(inputTarget, valueInput, inputPassword);
-    }
-
-    if (paramenter === FORM_EVEN.BLUR) {
-      if (valueInput.length <= 0) {
-        validateEvenError.blur(inputTarget.name as FORM, textErrorElm);
-      }
-      checkInput(inputTarget, valueInput, inputPassword);
-    }
-
-    if (paramenter === FORM_EVEN.FOCUS) {
-      inputTarget.classList.remove("invalid");
-    }
+const handleValid = (
+  condition: boolean,
+  input: HTMLInputElement,
+  classInvalid: string
+): void => {
+  if (condition) {
+    input.classList.remove(classInvalid);
+  } else {
+    input.classList.add(classInvalid);
   }
-}
+};
 
-function checkInput(
+const checkInput = (
   inputTarget: HTMLInputElement,
   value: string,
   inputPassword: HTMLInputElement
-) {
+): void => {
   const regexEmail = VALIDATE.EMAIL;
 
   const textErrorElm = inputTarget.nextElementSibling as HTMLDivElement;
@@ -108,18 +70,56 @@ function checkInput(
       break;
     }
   }
-}
+};
 
-function handleValid(
-  condition: boolean,
-  input: HTMLInputElement,
-  classInvalid: string
-) {
-  if (condition) {
-    input.classList.remove(classInvalid);
-  } else {
-    input.classList.add(classInvalid);
+const handleInput = (
+  e: Event,
+  paramenter: FORM_EVEN,
+  inputs: NodeListOf<HTMLInputElement>
+): void => {
+  const inputPassword = inputs[1];
+  const inputTarget = e.target as HTMLInputElement;
+  const textErrorElm = inputTarget.nextElementSibling as HTMLElement;
+  const valueInput = inputTarget.value;
+
+  if (paramenter === FORM_EVEN.INPUT) {
+    if (valueInput.length === 0) {
+      inputTarget.classList.remove("border-invalid");
+      inputTarget.classList.remove("invalid");
+    } else {
+      validateEvenError.input(inputTarget.name as FORM, textErrorElm);
+    }
+    checkInput(inputTarget, valueInput, inputPassword);
   }
-}
+
+  if (paramenter === FORM_EVEN.BLUR) {
+    if (valueInput.length <= 0) {
+      validateEvenError.blur(inputTarget.name as FORM, textErrorElm);
+    }
+    checkInput(inputTarget, valueInput, inputPassword);
+  }
+
+  if (paramenter === FORM_EVEN.FOCUS) {
+    inputTarget.classList.remove("invalid");
+  }
+};
+
+const validate = (formElm: HTMLFormElement, className: string) => {
+  const inputControls = formElm.querySelectorAll(
+    className
+  ) as NodeListOf<HTMLInputElement>;
+
+  [...inputControls].forEach((inputItem) => {
+    inputItem.addEventListener("input", (e: Event) =>
+      handleInput(e, FORM_EVEN.INPUT, inputControls)
+    );
+    inputItem.addEventListener("blur", (e: FocusEvent) =>
+      handleInput(e, FORM_EVEN.BLUR, inputControls)
+    );
+    inputItem.addEventListener("focus", (e: FocusEvent) =>
+      handleInput(e, FORM_EVEN.FOCUS, inputControls)
+    );
+  });
+};
 
 export { validate };

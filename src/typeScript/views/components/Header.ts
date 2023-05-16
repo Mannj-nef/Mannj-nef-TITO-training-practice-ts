@@ -27,7 +27,7 @@ const links: ILinks[] = [
   },
 ];
 
-function Header() {
+const Header = (): string => {
   return `
     <header class="header">
     <h1 class="header-title">YNDER TODO</h1>
@@ -48,6 +48,6 @@ function Header() {
     </div>
   </header>
     `;
-}
+};
 
 export default Header;

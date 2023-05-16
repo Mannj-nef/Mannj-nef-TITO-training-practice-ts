@@ -3,6 +3,14 @@ import { AuthForm } from "../types";
 import debounce from "./debounce";
 import { validate } from "./validate";
 
+const queryInputForm = (
+  form: HTMLFormElement,
+  name: string
+): HTMLInputElement => {
+  const element = form.querySelector(`input[name=${name}]`) as HTMLInputElement;
+  return element;
+};
+
 export const handleFormLogin = (
   formElm: HTMLFormElement,
   handler: (value: AuthForm) => Promise<void>,
@@ -11,7 +19,7 @@ export const handleFormLogin = (
   const formClassName = ".form-input";
   validate(formElm, formClassName);
 
-  formElm.addEventListener("submit", function (e: SubmitEvent): void {
+  formElm.addEventListener("submit", (e: SubmitEvent): void => {
     const inputElms = formElm.querySelectorAll(
       ".form-input"
     ) as NodeListOf<HTMLInputElement>;
@@ -58,7 +66,7 @@ export const handleFormTodo = (
   disableElm: () => void,
   handle: (inputValue: string, action: ACTION_FORM) => void
 ): void => {
-  formElm.addEventListener("submit", function (e: SubmitEvent): void {
+  formElm.addEventListener("submit", (e: SubmitEvent): void => {
     e.preventDefault();
     const actionElm = formElm.querySelector(".action-todo") as HTMLSpanElement;
     const input = queryInputForm(formElm, "input-todo");
@@ -86,8 +94,3 @@ export const handleFormTodo = (
     debounce(handleSubmit, 800);
   });
 };
-
-function queryInputForm(form: HTMLFormElement, name: string): HTMLInputElement {
-  const element = form.querySelector(`input[name=${name}]`) as HTMLInputElement;
-  return element;
-}

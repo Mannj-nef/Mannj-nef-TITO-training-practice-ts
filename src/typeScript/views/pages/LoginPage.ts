@@ -1,4 +1,7 @@
-function LoginPage(SignInPage: () => string, SignUpPage: () => string) {
+const LoginPage = (
+  SignInPage: () => string,
+  SignUpPage: () => string
+): string => {
   return ` <div class="login">
     ${SignInPage?.()}
     ${SignUpPage?.()}
@@ -9,6 +12,6 @@ function LoginPage(SignInPage: () => string, SignUpPage: () => string) {
         />
       </div>
     </div>`;
-}
+};
 
 export default LoginPage;

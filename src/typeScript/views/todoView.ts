@@ -34,6 +34,11 @@ class TodoView {
       ".btn-confirm-remove-cancel"
     ) as HTMLButtonElement;
 
+    const RemoveConfirm = (): void => {
+      const confirmParent = todoConfirm.parentNode as HTMLDivElement;
+      confirmParent.removeChild(todoConfirm);
+    };
+
     btnRemove.addEventListener("click", (e: MouseEvent): void => {
       e.stopPropagation();
       if (typeof handle === "function") {
@@ -49,11 +54,6 @@ class TodoView {
       e.stopPropagation();
       RemoveConfirm();
     });
-
-    function RemoveConfirm(): void {
-      const confirmParent = todoConfirm.parentNode as HTMLDivElement;
-      confirmParent.removeChild(todoConfirm);
-    }
   }
 
   getIdDeleteTodo(handle: (id: string) => Promise<void>) {
@@ -133,27 +133,7 @@ class TodoView {
     const todoItemBtnUpdate = todoList.querySelectorAll(
       ".btn-update"
     ) as NodeListOf<HTMLButtonElement>;
-    [...todoItemBtnUpdate].forEach((btnUpdate) => {
-      btnUpdate.addEventListener("click", (e: MouseEvent) => {
-        e.stopPropagation();
-        const target = e.target as HTMLButtonElement;
-        const { id } = target.dataset;
-        const todoItem = target.parentNode?.parentNode as HTMLDivElement;
-
-        if (!todoItem.classList.contains("todo-item")) return;
-
-        const todoLable = todoItem.querySelector(
-          ".checkbox-label"
-        ) as HTMLLabelElement;
-        const todoValue = todoLable.textContent;
-
-        id && setLocalStorage(KEY.LOCALSTORAGE_ID_UPDATE, id);
-
-        todoValue && handleForm(todoValue);
-      });
-    });
-
-    function handleForm(todoValue: string): void {
+    const handleForm = (todoValue: string): void => {
       const form = document.querySelector(".main-form") as HTMLFormElement;
 
       if (!form) return;
@@ -176,7 +156,27 @@ class TodoView {
         actionTodo.textContent = ACTION_FORM.ADD;
         btnRemoveValue.classList.remove("main-update");
       });
-    }
+    };
+
+    [...todoItemBtnUpdate].forEach((btnUpdate) => {
+      btnUpdate.addEventListener("click", (e: MouseEvent) => {
+        e.stopPropagation();
+        const target = e.target as HTMLButtonElement;
+        const { id } = target.dataset;
+        const todoItem = target.parentNode?.parentNode as HTMLDivElement;
+
+        if (!todoItem.classList.contains("todo-item")) return;
+
+        const todoLable = todoItem.querySelector(
+          ".checkbox-label"
+        ) as HTMLLabelElement;
+        const todoValue = todoLable.textContent;
+
+        id && setLocalStorage(KEY.LOCALSTORAGE_ID_UPDATE, id);
+
+        todoValue && handleForm(todoValue);
+      });
+    });
   };
 
   resetFormTodoView = (): void => {

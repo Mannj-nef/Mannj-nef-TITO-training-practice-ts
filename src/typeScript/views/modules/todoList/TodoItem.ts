@@ -1,10 +1,10 @@
 import { TodoItem } from "../../../types";
 
-function TodoItem({
+const TodoItem = ({
   id = "",
   complete = false,
   title = "Please check me if done task",
-}: TodoItem) {
+}: TodoItem): string => {
   return `
     <div class="todo-item" data-id_todo="${id}">
         <label for="checkbox" class="checkbox-style">
@@ -45,6 +45,6 @@ function TodoItem({
         </div>
     </div>
     `;
-}
+};
 
 export default TodoItem;

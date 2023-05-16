@@ -1,4 +1,4 @@
-function SignUp() {
+const SignUp = (): string => {
   return `
     <div class="form-wrapp">
     <form id="form-sign-up" class="form-login" autocomplete="off">
@@ -52,6 +52,6 @@ function SignUp() {
     </form>
   </div>
     `;
-}
+};
 
 export default SignUp;

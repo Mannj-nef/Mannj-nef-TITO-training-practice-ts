@@ -5,10 +5,10 @@ interface IIcon {
   error: "ti-close";
 }
 
-function Toast(
+const Toast = (
   type: TOAST = TOAST.ERROR,
   message: string = "TypeError: Failed to fetch"
-) {
+): string => {
   const icons: IIcon = {
     [TOAST.SUCCESS]: "ti-check",
     [TOAST.ERROR]: "ti-close",
@@ -23,5 +23,5 @@ function Toast(
         <p class="toast-desc">${message}</p>
       </div>
     `;
-}
+};
 export default Toast;
