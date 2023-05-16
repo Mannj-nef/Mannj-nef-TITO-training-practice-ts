@@ -1,5 +1,5 @@
 import { FORM, FORM_EVEN } from "../enums";
-import ERROR_VALIDATE from "../constants/errorMessage";
+import { ERROR_VALIDATE } from "../constants/message";
 import VALIDATE from "../constants/validateSchema";
 
 const validateEvenError = {
