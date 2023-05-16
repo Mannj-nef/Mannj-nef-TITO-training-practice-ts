@@ -1,7 +1,7 @@
 import { ACTION_FORM, KEY, PAGE } from "../enums";
 import { ITodo, ITodoParam } from "../interfaces";
-import { handleCreateId } from "../helper/createId";
-import { getLocalStorage, clearLocalStorage } from "../helper/localStorage";
+import { handleCreateId } from "../helpers/createId";
+import { getLocalStorage, clearLocalStorage } from "../helpers/localStorage";
 
 import TodoService from "../services/todo.service";
 import AppView from "../views/appView";

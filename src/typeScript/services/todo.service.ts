@@ -2,7 +2,7 @@ import axios from "axios";
 import AppView from "../views/appView";
 
 import TodoSchema from "../models/todoModel";
-import TOAST from "../helper/toast";
+import TOAST from "../helpers/toast";
 import MESSAGE from "../constants/message";
 import { ITodo } from "../interfaces";
 import { TodoData } from "../types";

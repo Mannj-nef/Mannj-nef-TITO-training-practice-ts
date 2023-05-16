@@ -1,5 +1,5 @@
 import { KEY } from "../enums";
-import { getLocalStorage } from "../helper/localStorage";
+import { getLocalStorage } from "../helpers/localStorage";
 
 import AuthService from "../services/auth.service";
 import AuthView from "../views/authView";
@@ -7,7 +7,7 @@ import AppView from "../views/appView";
 
 import { AuthForm, AuthLocalStorage, AuthLogin } from "../types";
 import { IAuthParam } from "../interfaces";
-import renderTodo from "../helper/renderTodo";
+import renderTodo from "../helpers/renderTodo";
 
 class AuthController {
   service: AuthService;

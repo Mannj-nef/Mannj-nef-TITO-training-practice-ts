@@ -4,8 +4,8 @@ import AuthSchema from "../models/authModel";
 import AppView from "../views/appView";
 import { KEY, PAGE } from "../enums";
 import MESSAGE from "../constants/message";
-import { setLocalStorage } from "../helper/localStorage";
-import TOAST from "../helper/toast";
+import { setLocalStorage } from "../helpers/localStorage";
+import TOAST from "../helpers/toast";
 import { IAuth } from "../interfaces";
 import { AuthLocalStorage, AuthLogin } from "../types";
 
