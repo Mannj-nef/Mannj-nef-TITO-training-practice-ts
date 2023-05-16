@@ -1,6 +1,6 @@
 import TodoForm from "./TodoForm";
 
-function TodoList() {
+const TodoList = (): string => {
   return `
     <div class="todo-main">
         <h2 class="main-title">Todo App</h2>
@@ -10,6 +10,6 @@ function TodoList() {
     </div>
 
   `;
-}
+};
 
 export default TodoList;

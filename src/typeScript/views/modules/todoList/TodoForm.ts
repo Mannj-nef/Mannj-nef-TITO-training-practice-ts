@@ -1,4 +1,4 @@
-function TodoForm() {
+const TodoForm = (): string => {
   return `
     <form class="main-form" autocomplete="off">
         <input
@@ -18,6 +18,6 @@ function TodoForm() {
        </div >
     </form>
   `;
-}
+};
 
 export default TodoForm;
