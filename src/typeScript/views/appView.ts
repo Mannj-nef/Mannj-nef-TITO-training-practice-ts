@@ -3,7 +3,7 @@ import SignIn from "./modules/signIn/SignIn";
 import SignUp from "./modules/signUp/SignUp";
 import TodoPage from "./pages/TodoPage";
 import { PAGE } from "../enums";
-import debounce from "../helper/debounce";
+import debounce from "../helpers/debounce";
 
 class AppView {
   createLogin = (): void => {

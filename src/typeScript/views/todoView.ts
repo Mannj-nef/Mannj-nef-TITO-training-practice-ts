@@ -1,8 +1,8 @@
 import { ACTION_FORM, KEY } from "../enums";
 import { ITodo } from "../interfaces";
-import debounce from "../helper/debounce";
-import { handleFormTodo } from "../helper/form";
-import { clearLocalStorage, setLocalStorage } from "../helper/localStorage";
+import debounce from "../helpers/debounce";
+import { handleFormTodo } from "../helpers/form";
+import { clearLocalStorage, setLocalStorage } from "../helpers/localStorage";
 import TodoConfirmDelete from "./modules/todoList/TodoConfirmDelete";
 import TodoItem from "./modules/todoList/TodoItem";
 

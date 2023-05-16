@@ -1,4 +1,4 @@
-import { handleFormLogin } from "../helper/form";
+import { handleFormLogin } from "../helpers/form";
 import { FORM } from "../enums";
 import { AuthForm, AuthLogin } from "../types";
 
