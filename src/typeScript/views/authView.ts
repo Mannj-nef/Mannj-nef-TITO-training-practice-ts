@@ -1,62 +1,57 @@
 import { handleFormLogin } from "../helpers/form";
 import { FORM } from "../enums";
 import { AuthForm, AuthLogin } from "../types";
+import handleGetElm from "../helpers/handleGetElm";
 
 class AuthView {
-  constructor() {
-    this.domloadLoginView();
-  }
+  private loginPage: HTMLDivElement;
+  private loginBg: HTMLDivElement;
+  private loginForm: HTMLFormElement;
+  private registerElm: HTMLSpanElement;
+  private regesterForm: HTMLFormElement;
+  private loginElm: HTMLSpanElement;
+  private inputPasswordSignIn: HTMLInputElement;
+  private inputPasswordSignUp: HTMLInputElement;
 
-  domloadLoginView(): void {
-    window.addEventListener("load", () => {
-      this.handleChangeForm();
-      this.handleShowPassword();
-    });
+  constructor() {
+    this.loginPage = handleGetElm<HTMLDivElement>(".login");
+    this.loginBg = handleGetElm<HTMLDivElement>(".login-bg");
+    this.loginForm = handleGetElm<HTMLFormElement>("#form-sign-in");
+    this.regesterForm = handleGetElm<HTMLFormElement>("#form-sign-up");
+    this.registerElm = handleGetElm<HTMLFormElement>(".register-link");
+    this.loginElm = handleGetElm<HTMLFormElement>(".login-link");
+
+    this.inputPasswordSignIn =
+      handleGetElm<HTMLInputElement>("#password-signIn");
+    this.inputPasswordSignUp =
+      handleGetElm<HTMLInputElement>("#password-signUp");
   }
 
   handleChangeForm = (): void => {
-    const loginPage = document.querySelector(".login") as HTMLDivElement;
+    const loginPage = this.loginPage;
+
     if (!loginPage) return;
-    const loginBg = document.querySelector(".login-bg") as HTMLDivElement;
+    const loginBg = this.loginBg;
 
-    // form login
-    const loginForm = document.querySelector(
-      "#form-sign-in"
-    ) as HTMLFormElement;
-    const registerElm = loginForm.querySelector(
-      ".register-link"
-    ) as HTMLElement;
-
-    // form register
-    const regesterForm = document.querySelector(
-      "#form-sign-up"
-    ) as HTMLFormElement;
-    const loginElm = regesterForm.querySelector(
-      ".login-link"
-    ) as HTMLSpanElement;
-
-    registerElm.addEventListener("click", (): void => {
+    this.registerElm.addEventListener("click", (): void => {
       loginBg.classList.remove("login-bg-right");
     });
 
-    loginElm.addEventListener("click", (): void => {
+    this.loginElm.addEventListener("click", (): void => {
       loginBg.classList.add("login-bg-right");
     });
   };
 
   getLoginForm = (handler: (data: AuthLogin) => Promise<void>): void => {
-    const loginForm = document.querySelector(
-      "#form-sign-in"
-    ) as HTMLFormElement;
+    const loginForm = this.loginForm;
+
     if (loginForm) {
       handleFormLogin(loginForm, handler, FORM.LOGIN);
     }
   };
 
   getRegisterForm = (handler: (data: AuthForm) => Promise<void>): void => {
-    const regesterForm = document.querySelector(
-      "#form-sign-up"
-    ) as HTMLFormElement;
+    const regesterForm = this.regesterForm;
     if (regesterForm) {
       handleFormLogin(regesterForm, handler, FORM.RESGITER);
     }
@@ -64,20 +59,12 @@ class AuthView {
 
   handleShowPassword = (): void => {
     // sign in
-    const loginForm = document.querySelector(
-      "#form-sign-in"
-    ) as HTMLFormElement;
-    const InputPasswordSignIn = document.querySelector(
-      "#password-signIn"
-    ) as HTMLInputElement;
+    const loginForm = this.loginForm;
+    const inputPasswordSignIn = this.inputPasswordSignIn;
 
     // sign up
-    const regesterForm = document.querySelector(
-      "#form-sign-up"
-    ) as HTMLFormElement;
-    const InputPasswordSignUp = document.querySelector(
-      "#password-signUp"
-    ) as HTMLInputElement;
+    const regesterForm = this.regesterForm;
+    const inputPasswordSignUp = this.inputPasswordSignUp;
 
     const handleShow = (
       formElm: HTMLFormElement,
@@ -86,6 +73,7 @@ class AuthView {
       const iconShow = formElm.querySelector(
         ".show-password"
       ) as HTMLDivElement;
+
       iconShow.addEventListener("click", (): void => {
         const inputType = InputPassword.getAttribute("type");
         if (inputType === "password") {
@@ -97,8 +85,8 @@ class AuthView {
     };
 
     if (loginForm || regesterForm) {
-      handleShow(loginForm, InputPasswordSignIn);
-      handleShow(regesterForm, InputPasswordSignUp);
+      handleShow(loginForm, inputPasswordSignIn);
+      handleShow(regesterForm, inputPasswordSignUp);
     }
   };
 }

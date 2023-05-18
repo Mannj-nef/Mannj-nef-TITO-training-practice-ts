@@ -1,28 +1,26 @@
-import { KEY } from "../enums";
-import { getLocalStorage } from "../helpers/localStorage";
-
 import AuthService from "../services/auth.service";
 import AuthView from "../views/authView";
 import AppView from "../views/appView";
 
 import { AuthForm, AuthLocalStorage, AuthLogin } from "../types";
 import { IAuthParam } from "../interfaces";
-import renderTodo from "../helpers/renderTodo";
+import { renderTodoPage } from "../helpers/renderPage";
 
 class AuthController {
-  service: AuthService;
-  view: AuthView;
-  appView: AppView;
+  private service: AuthService;
+  private view: AuthView;
 
   constructor(props: IAuthParam) {
     this.service = props.AuthService;
     this.view = props.AuthView;
-    this.appView = props.AppView;
+  }
 
-    this.handleCheckLogin();
+  handleRenderView = () => {
+    this.view.handleChangeForm();
+    this.view.handleShowPassword();
     this.view.getLoginForm(this.handleLogin);
     this.view.getRegisterForm(this.handleRegister);
-  }
+  };
 
   handleLogin = async (data: AuthLogin): Promise<void> => {
     const Auth = this.service;
@@ -57,27 +55,9 @@ class AuthController {
     AuthService.loginSuccess(user);
 
     if (user) {
-      renderTodo();
+      renderTodoPage();
     }
   }
-
-  handleCheckLogin = async (): Promise<void> => {
-    const Auth = this.service;
-    const AppView = this.appView;
-
-    const userJson: AuthLocalStorage = getLocalStorage(KEY.LOCALSTORAGE_UESR);
-
-    if (!userJson) {
-      AppView.createLogin();
-      return;
-    }
-
-    const user = await Auth.fildEmailUser(userJson);
-    if (user) {
-      AppView.createTodoPage();
-      renderTodo();
-    }
-  };
 }
 
 export default AuthController;

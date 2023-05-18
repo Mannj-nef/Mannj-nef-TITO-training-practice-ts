@@ -5,17 +5,36 @@ import { handleFormTodo } from "../helpers/form";
 import { clearLocalStorage, setLocalStorage } from "../helpers/localStorage";
 import TodoConfirmDelete from "./modules/todoList/TodoConfirmDelete";
 import TodoItem from "./modules/todoList/TodoItem";
+import handleGetElm from "../helpers/handleGetElm";
+
+const disableClassname = "disable";
 
 class TodoView {
+  private form: HTMLFormElement;
+  private todoListElm: HTMLDivElement;
+  private todoConfirmCurrent: HTMLDivElement;
+  private btnLogout: HTMLButtonElement;
+  private inputMain: HTMLInputElement;
+
+  constructor() {
+    this.form = handleGetElm<HTMLFormElement>(".main-form");
+    this.todoListElm = handleGetElm<HTMLDivElement>(".todo-list");
+    this.todoConfirmCurrent = handleGetElm<HTMLDivElement>(
+      ".todo-confirm-delete"
+    );
+    this.btnLogout = handleGetElm<HTMLButtonElement>(".header-logout");
+    this.inputMain = handleGetElm<HTMLInputElement>(".main-input");
+  }
+
   getValueInput(handle: (inputValue: string, action: ACTION_FORM) => void) {
-    const form = document.querySelector(".main-form") as HTMLFormElement;
+    const form = this.form;
     if (form) {
       handleFormTodo(form, this.disableTodoView, handle);
     }
   }
 
   displayTodos = (todos: ITodo[]): void => {
-    const todoListElm = document.querySelector(".todo-list") as HTMLDivElement;
+    const todoListElm = this.todoListElm;
     if (todos.length > 0) {
       const todoList = todos.map((todoItem: ITodo) => TodoItem(todoItem));
       todoListElm.innerHTML = todoList.reverse().join("");
@@ -33,7 +52,6 @@ class TodoView {
     const btnCancel = document.querySelector(
       ".btn-confirm-remove-cancel"
     ) as HTMLButtonElement;
-
     const RemoveConfirm = (): void => {
       const confirmParent = todoConfirm.parentNode as HTMLDivElement;
       confirmParent.removeChild(todoConfirm);
@@ -57,7 +75,7 @@ class TodoView {
   }
 
   getIdDeleteTodo(handle: (id: string) => Promise<void>) {
-    const todoList = document.querySelector(".todo-list") as HTMLDivElement;
+    const todoList = this.todoListElm;
     if (!todoList) return;
 
     const todoItemsBtnRemove = todoList.querySelectorAll(
@@ -71,9 +89,7 @@ class TodoView {
         const target = e.target as HTMLButtonElement;
         const { id } = target.dataset;
 
-        const todoConfirmCurrent = document.querySelector(
-          ".todo-confirm-delete"
-        ) as HTMLDivElement;
+        const todoConfirmCurrent = this.todoConfirmCurrent;
 
         if (todoConfirmCurrent) {
           const confirmParrent =
@@ -98,6 +114,7 @@ class TodoView {
     const todos = document.querySelectorAll(
       ".todo-item"
     ) as NodeListOf<HTMLDivElement>;
+
     [...todos].forEach((todo) => {
       todo.addEventListener("click", (e: MouseEvent) => {
         e.stopPropagation();
@@ -127,12 +144,13 @@ class TodoView {
   }
 
   getValueUpdateTodoView = (): void => {
-    const todoList = document.querySelector(".todo-list") as HTMLDivElement;
+    const todoList = this.todoListElm;
 
     if (!todoList) return;
     const todoItemBtnUpdate = todoList.querySelectorAll(
       ".btn-update"
     ) as NodeListOf<HTMLButtonElement>;
+
     const handleForm = (todoValue: string): void => {
       const form = document.querySelector(".main-form") as HTMLFormElement;
 
@@ -180,7 +198,7 @@ class TodoView {
   };
 
   resetFormTodoView = (): void => {
-    const form = document.querySelector(".main-form") as HTMLFormElement;
+    const form = this.form;
     if (!form) return;
     const btnRemoveValue = form.querySelector(
       ".btn-remove-form"
@@ -192,9 +210,7 @@ class TodoView {
   };
 
   logOutView = (handle: () => void): void => {
-    const btnLogout = document.querySelector(
-      ".header-logout"
-    ) as HTMLButtonElement;
+    const btnLogout = this.btnLogout;
 
     btnLogout.addEventListener("click", () => {
       clearLocalStorage(KEY.LOCALSTORAGE_UESR);
@@ -209,17 +225,18 @@ class TodoView {
     const todoElm = document.querySelectorAll(
       ".todo-item"
     ) as NodeListOf<HTMLDivElement>;
-    const inputMain = document.querySelector(".main-input") as HTMLInputElement;
+
+    const inputMain = this.inputMain;
 
     [...todoElm].forEach((todo) => {
       if (!clearDisable) {
-        todo.classList.add("disable");
-        inputMain.classList.add("disable");
+        todo.classList.add(disableClassname);
+        inputMain.classList.add(disableClassname);
         todo.style.pointerEvents = "none";
         inputMain.style.pointerEvents = "none";
       } else {
-        todo.classList.remove("disable");
-        inputMain.classList.remove("disable");
+        todo.classList.remove(disableClassname);
+        inputMain.classList.remove(disableClassname);
         todo.style.pointerEvents = "";
         inputMain.style.pointerEvents = "";
       }

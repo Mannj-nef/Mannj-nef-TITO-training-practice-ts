@@ -2,6 +2,8 @@ import { FORM, FORM_EVEN } from "../enums";
 import { ERROR_VALIDATE } from "../constants/message";
 import VALIDATE from "../constants/validateSchema";
 
+const invalidClassname = "invalid";
+
 const validateEvenError = {
   // even
   input: (name: FORM, textErrorElm: HTMLElement) => {
@@ -53,19 +55,19 @@ const checkInput = (
   switch (inputName) {
     case FORM.EMAIL: {
       const validateEmail = regexEmail.test(value);
-      handleValid(validateEmail, inputTarget, "invalid");
+      handleValid(validateEmail, inputTarget, invalidClassname);
       break;
     }
     case FORM.PASSWORD || "text": {
       const validatePassword = value.length >= VALIDATE.PASS_MIN;
-      handleValid(validatePassword, inputTarget, "invalid");
+      handleValid(validatePassword, inputTarget, invalidClassname);
       break;
     }
     case FORM.CONFIRMPASSWORD:
     default: {
       const passwordValue = inputPassword.value;
       const validateConfirmPassword = value === passwordValue;
-      handleValid(validateConfirmPassword, inputTarget, "invalid");
+      handleValid(validateConfirmPassword, inputTarget, invalidClassname);
       textErrorElm.textContent = ERROR_VALIDATE.PASS_NOT_MATCH;
       break;
     }
@@ -84,8 +86,9 @@ const handleInput = (
 
   if (paramenter === FORM_EVEN.INPUT) {
     if (valueInput.length === 0) {
-      inputTarget.classList.remove("border-invalid");
-      inputTarget.classList.remove("invalid");
+      const borderInvalidClassName = "border-invalid";
+      inputTarget.classList.remove(borderInvalidClassName);
+      inputTarget.classList.remove(invalidClassname);
     } else {
       validateEvenError.input(inputTarget.name as FORM, textErrorElm);
     }
@@ -100,7 +103,7 @@ const handleInput = (
   }
 
   if (paramenter === FORM_EVEN.FOCUS) {
-    inputTarget.classList.remove("invalid");
+    inputTarget.classList.remove(invalidClassname);
   }
 };
 

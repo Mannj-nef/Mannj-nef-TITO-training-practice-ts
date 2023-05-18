@@ -4,20 +4,27 @@ import SignUp from "./modules/signUp/SignUp";
 import TodoPage from "./pages/TodoPage";
 import { PAGE } from "../enums";
 import debounce from "../helpers/debounce";
+import handleGetElm from "../helpers/handleGetElm";
 
 class AppView {
-  createLogin = (): void => {
-    const app = document.getElementById("root") as HTMLDivElement;
-    app.innerHTML = LoginPage(SignIn, SignUp);
-  };
+  private app: HTMLDivElement;
+  private toast: HTMLDivElement;
+
+  constructor() {
+    this.app = handleGetElm<HTMLDivElement>("#root");
+    this.toast = handleGetElm<HTMLDivElement>("#toast");
+  }
 
   createTodoPage = (): void => {
-    const app = document.getElementById("root") as HTMLDivElement;
-    app.innerHTML = TodoPage();
+    this.app.innerHTML = TodoPage();
+  };
+
+  createLogin = (): void => {
+    this.app.innerHTML = LoginPage(SignIn, SignUp);
   };
 
   createToast = (data: string): void => {
-    const toast = document.getElementById("toast") as HTMLDivElement;
+    const toast = this.toast;
     toast.innerHTML = data;
 
     debounce(() => {

@@ -10,9 +10,9 @@ import { IAuth } from "../interfaces";
 import { AuthLocalStorage, AuthLogin } from "../types";
 
 class AuthService {
-  user: IAuth | {};
-  AppView: AppView;
-  endpoint: string;
+  public user: IAuth | {};
+  private AppView: AppView;
+  private endpoint: string;
 
   constructor() {
     this.user = {};
