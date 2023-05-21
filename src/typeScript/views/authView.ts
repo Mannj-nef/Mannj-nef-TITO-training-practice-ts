@@ -45,16 +45,15 @@ class AuthView {
   getLoginForm = (handler: (data: AuthLogin) => Promise<void>): void => {
     const loginForm = this.loginForm;
 
-    if (loginForm) {
-      handleFormLogin(loginForm, handler, FORM.LOGIN);
-    }
+    if (!loginForm) return;
+    handleFormLogin(loginForm, handler, FORM.LOGIN);
   };
 
   getRegisterForm = (handler: (data: AuthForm) => Promise<void>): void => {
     const regesterForm = this.regesterForm;
-    if (regesterForm) {
-      handleFormLogin(regesterForm, handler, FORM.RESGITER);
-    }
+
+    if (!regesterForm) return;
+    handleFormLogin(regesterForm, handler, FORM.RESGITER);
   };
 
   handleShowPassword = (): void => {

@@ -89,16 +89,15 @@ class AuthService {
   }
 
   loginSuccess = (user: AuthLocalStorage): void => {
-    setLocalStorage(KEY.LOCALSTORAGE_UESR, user);
+    setLocalStorage(KEY.LOCALSTORAGE_USER, user);
     this.AppView.createToast(TOAST.SUCCESS(MESSAGE.LOGIN_SUCCESS));
 
     this.AppView.showPage("login", PAGE.TODO);
   };
 
   accountExists = (hasUser: IAuth): void => {
-    if (hasUser) {
-      this.AppView.createToast(TOAST.ERROR(MESSAGE.ACCOUNT_EXISTS));
-    }
+    if (!hasUser) return;
+    this.AppView.createToast(TOAST.ERROR(MESSAGE.ACCOUNT_EXISTS));
   };
 }
 

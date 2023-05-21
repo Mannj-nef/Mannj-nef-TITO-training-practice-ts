@@ -43,7 +43,7 @@ class TodoController {
     const TodoService = this.service;
 
     const TodoView = this.view;
-    const user = getLocalStorage(KEY.LOCALSTORAGE_UESR);
+    const user = getLocalStorage(KEY.LOCALSTORAGE_USER);
 
     if (user) {
       await TodoService.getTodoByEmail(user.email);
@@ -63,7 +63,7 @@ class TodoController {
     const TodoService = this.service;
     const TodoView = this.view;
 
-    const { email } = getLocalStorage(KEY.LOCALSTORAGE_UESR);
+    const { email } = getLocalStorage(KEY.LOCALSTORAGE_USER);
 
     const todoItem: ITodo = {
       id: handleCreateId(),

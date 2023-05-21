@@ -14,7 +14,7 @@ class AppController {
   }
 
   handleCheckLogin() {
-    const userJson: AuthLocalStorage = getLocalStorage(KEY.LOCALSTORAGE_UESR);
+    const userJson: AuthLocalStorage = getLocalStorage(KEY.LOCALSTORAGE_USER);
 
     if (!userJson) {
       this.appView.createLogin();
