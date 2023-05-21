@@ -8,9 +8,9 @@ import { ITodo } from "../interfaces";
 import { TodoData } from "../types";
 
 class TodoService {
-  todos: ITodo[];
-  AppView: AppView;
-  endpoint: string;
+  public todos: ITodo[];
+  private AppView: AppView;
+  private endpoint: string;
   constructor() {
     this.todos = [];
     this.AppView = new AppView();

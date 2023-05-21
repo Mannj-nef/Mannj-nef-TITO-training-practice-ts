@@ -6,11 +6,12 @@ import { getLocalStorage, clearLocalStorage } from "../helpers/localStorage";
 import TodoService from "../services/todo.service";
 import AppView from "../views/appView";
 import TodoView from "../views/todoView";
+import { renderLoginPage } from "../helpers/renderPage";
 
 class TodoController {
-  service: TodoService;
-  view: TodoView;
-  appView: AppView;
+  private service: TodoService;
+  private view: TodoView;
+  private appView: AppView;
 
   constructor({ TodoService, TodoView, AppView }: ITodoParam) {
     this.service = TodoService;
@@ -140,8 +141,8 @@ class TodoController {
     const AppView = this.appView;
     const TodoService = this.service;
 
-    window.location.search = "";
     AppView.showPage("todo-page", PAGE.LOGIN);
+    renderLoginPage();
     TodoService.logoutSuccess();
   };
 }
