@@ -28,9 +28,9 @@ class TodoView {
 
   getValueInput(handle: (inputValue: string, action: ACTION_FORM) => void) {
     const form = this.form;
-    if (form) {
-      handleFormTodo(form, this.disableTodoView, handle);
-    }
+
+    if (!form) return;
+    handleFormTodo(form, this.disableTodoView, handle);
   }
 
   displayTodos = (todos: ITodo[]): void => {
@@ -213,7 +213,7 @@ class TodoView {
     const btnLogout = this.btnLogout;
 
     btnLogout.addEventListener("click", () => {
-      clearLocalStorage(KEY.LOCALSTORAGE_UESR);
+      clearLocalStorage(KEY.LOCALSTORAGE_USER);
 
       if (typeof handle === "function") {
         handle();

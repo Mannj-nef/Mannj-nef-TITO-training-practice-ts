@@ -23,9 +23,9 @@ class TodoService {
     try {
       const { data }: { data: ITodo[] } = await axios.get(endpointUrl);
 
-      if (data) {
-        this.todos = data.map((todo: ITodo) => new TodoSchema(todo));
-      }
+      if (!data) return;
+
+      this.todos = data.map((todo: ITodo) => new TodoSchema(todo));
     } catch (error) {
       this.AppView.createToast(TOAST.ERROR(error as string));
     }
@@ -37,9 +37,9 @@ class TodoService {
     try {
       const { data }: { data: ITodo[] } = await axios.get(endpointUrl);
 
-      if (data) {
-        this.todos = data.map((todo: ITodo) => new TodoSchema(todo));
-      }
+      if (!data) return;
+
+      this.todos = data.map((todo: ITodo) => new TodoSchema(todo));
     } catch (error) {
       this.AppView.createToast(TOAST.ERROR(error as string));
     }
@@ -54,6 +54,7 @@ class TodoService {
       if (data) {
         this.todos.push(data);
       }
+
       this.AppView.createToast(TOAST.SUCCESS(MESSAGE.ADD_TODO_SUCCESS));
       return data;
     } catch (error) {
