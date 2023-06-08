@@ -1,14 +1,10 @@
-interface ITodoItem {
-  id: any;
-  complete: any;
-  title: any;
-}
+import { TodoItem } from "../../../types";
 
-function TodoItem({
-  id = null,
+const TodoItem = ({
+  id = "",
   complete = false,
   title = "Please check me if done task",
-}: ITodoItem) {
+}: TodoItem): string => {
   return `
     <div class="todo-item" data-id_todo="${id}">
         <label for="checkbox" class="checkbox-style">
@@ -49,6 +45,6 @@ function TodoItem({
         </div>
     </div>
     `;
-}
+};
 
 export default TodoItem;

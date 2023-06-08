@@ -1,14 +1,19 @@
-import { TOAST } from "../../constants/type";
+import { TOAST } from "../../enums";
 
-function Toast(
-  type: string = "error",
+interface IIcon {
+  success: "ti-check";
+  error: "ti-close";
+}
+
+const Toast = (
+  type: TOAST = TOAST.ERROR,
   message: string = "TypeError: Failed to fetch"
-) {
-  const icons: any = {
+): string => {
+  const icons: IIcon = {
     [TOAST.SUCCESS]: "ti-check",
     [TOAST.ERROR]: "ti-close",
   };
-  const icon = icons[type];
+  const icon: "ti-check" | "ti-close" = icons[type];
 
   return `
     <div class="toast-item toast-${type}">
@@ -18,5 +23,5 @@ function Toast(
         <p class="toast-desc">${message}</p>
       </div>
     `;
-}
+};
 export default Toast;

@@ -1,16 +1,11 @@
-interface ITodoSchema {
-  id: any;
-  email: any;
-  title: any;
-  complete: any;
-}
+import { ITodo } from "../interfaces";
 
 class TodoSchema {
-  id: any;
-  email: any;
-  title: any;
-  complete: any;
-  constructor({ id, email, title, complete }: ITodoSchema) {
+  id: string;
+  email: string;
+  title: string;
+  complete: boolean;
+  constructor({ id, email, title, complete }: ITodo) {
     this.id = id;
     this.email = email;
     this.title = title;

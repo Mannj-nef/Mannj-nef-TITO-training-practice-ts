@@ -1,4 +1,4 @@
-function TodoConfirmDelete() {
+const TodoConfirmDelete = (): string => {
   return `
     <div class="todo-confirm-delete">
         <p>Confirm remove</p>
@@ -12,6 +12,6 @@ function TodoConfirmDelete() {
         </div class="btn-confirm-remove-wrapp">
     </div>
     `;
-}
+};
 
 export default TodoConfirmDelete;

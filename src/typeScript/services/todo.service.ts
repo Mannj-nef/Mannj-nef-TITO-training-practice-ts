@@ -2,89 +2,95 @@ import axios from "axios";
 import AppView from "../views/appView";
 
 import TodoSchema from "../models/todoModel";
-import TOAST from "../helper/toast";
+import TOAST from "../helpers/toast";
 import MESSAGE from "../constants/message";
+import { ITodo } from "../interfaces";
+import { TodoData } from "../types";
 
 class TodoService {
-  todos: any;
-  AppView: any;
-  endpoint: any;
+  public todos: ITodo[];
+  private AppView: AppView;
+  private endpoint: string;
   constructor() {
     this.todos = [];
     this.AppView = new AppView();
     this.endpoint = `${process.env.BASE_URL}/todoList`;
   }
 
-  async getAlltodo() {
+  async getAlltodo(): Promise<void> {
     const endpointUrl = this.endpoint;
 
     try {
-      const { data } = await axios.get(endpointUrl);
+      const { data }: { data: ITodo[] } = await axios.get(endpointUrl);
 
-      if (data) {
-        this.todos = data.map((todo: any) => new TodoSchema(todo));
-      }
+      if (!data) return;
+
+      this.todos = data.map((todo: ITodo) => new TodoSchema(todo));
     } catch (error) {
-      this.AppView.createToast(TOAST.ERROR(error));
+      this.AppView.createToast(TOAST.ERROR(error as string));
     }
   }
 
-  async getTodoByEmail(email: any) {
+  async getTodoByEmail(email: string): Promise<void> {
     const endpointUrl = `${this.endpoint}?email=${email}`;
 
     try {
-      const { data } = await axios.get(endpointUrl);
+      const { data }: { data: ITodo[] } = await axios.get(endpointUrl);
 
-      if (data) {
-        this.todos = data.map((todo: any) => new TodoSchema(todo));
-      }
+      if (!data) return;
+
+      this.todos = data.map((todo: ITodo) => new TodoSchema(todo));
     } catch (error) {
-      this.AppView.createToast(TOAST.ERROR(error));
+      this.AppView.createToast(TOAST.ERROR(error as string));
     }
   }
 
-  async addTodo(todo: any) {
+  async addTodo(todo: ITodo): Promise<ITodo> {
     const endpointUrl = this.endpoint;
 
     try {
-      const { data } = await axios.post(endpointUrl, todo);
+      const { data }: { data: ITodo } = await axios.post(endpointUrl, todo);
 
       if (data) {
         this.todos.push(data);
       }
+
       this.AppView.createToast(TOAST.SUCCESS(MESSAGE.ADD_TODO_SUCCESS));
       return data;
     } catch (error) {
-      this.AppView.createToast(TOAST.ERROR(error));
-      return null;
+      this.AppView.createToast(TOAST.ERROR(error as string));
+      throw error;
     }
   }
 
-  async updateTodo(id: any, todoData: any) {
+  async updateTodo(id: string, todoData: TodoData): Promise<ITodo> {
     const endpointUrl = `${this.endpoint}/${id}`;
 
     try {
-      const { data } = await axios.patch(endpointUrl, todoData);
+      const { data }: { data: ITodo } = await axios.patch(
+        endpointUrl,
+        todoData
+      );
       this.AppView.createToast(TOAST.SUCCESS(MESSAGE.UPDATE_TODO_SUCCESS));
       return data;
     } catch (error) {
-      this.AppView.createToast(TOAST.ERROR(error));
-      return null;
+      this.AppView.createToast(TOAST.ERROR(error as string));
+      throw error;
     }
   }
 
-  async removeTodo(id: any) {
+  async removeTodo(id: string): Promise<void> {
     const endpointUrl = `${this.endpoint}/${id}`;
     try {
       await axios.delete(endpointUrl);
-      this.todos = this.todos.filter((todo: any) => todo.id !== id);
+      this.todos = this.todos.filter((todo: ITodo) => todo.id !== id);
       this.AppView.createToast(TOAST.SUCCESS(MESSAGE.DELETE_TODO_SUCCESS));
     } catch (error) {
-      this.AppView.createToast(TOAST.ERROR(error));
+      this.AppView.createToast(TOAST.ERROR(error as string));
     }
   }
 
-  logoutSuccess = () => {
+  logoutSuccess = (): void => {
     this.AppView.createToast(TOAST.SUCCESS(MESSAGE.LOGOUT_SUCCESS));
   };
 }

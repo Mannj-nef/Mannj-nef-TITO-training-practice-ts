@@ -1,7 +1,7 @@
 import Header from "../components/Header";
 import TodoList from "../modules/todoList/TodoList";
 
-function TodoPage() {
+const TodoPage = (): string => {
   return `
     <div class="todo-page">
       <div class="todo-content container">
@@ -10,6 +10,6 @@ function TodoPage() {
       </div>
     </div>
     `;
-}
+};
 
 export default TodoPage;

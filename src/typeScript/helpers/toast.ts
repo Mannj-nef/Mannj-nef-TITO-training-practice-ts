@@ -1,13 +1,14 @@
 import Toast from "../views/components/Toast";
-import { TOAST as TOAST_TYPE } from "../constants/type";
+import { TOAST as TOAST_TYPE } from "../enums";
+import { Toast as ToastType } from "../types";
 
-const TOAST = {
-  SUCCESS: (message: any) => {
+const TOAST: ToastType = {
+  SUCCESS: (message: string) => {
     const type = TOAST_TYPE.SUCCESS;
     return Toast(type, message);
   },
 
-  ERROR: (message: any) => {
+  ERROR: (message: string) => {
     const type = TOAST_TYPE.ERROR;
     return Toast(type, message);
   },
