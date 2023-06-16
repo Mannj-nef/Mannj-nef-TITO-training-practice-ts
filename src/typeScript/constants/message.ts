@@ -8,7 +8,7 @@ const MESSAGE = {
   ADD_TODO_SUCCESS: "Add todo successful",
   UPDATE_TODO_SUCCESS: "Update todo successful",
   DELETE_TODO_SUCCESS: "Remove todo successful",
-};
+} as const;
 
 export const ERROR_VALIDATE = {
   EMAIL_REQUIRED: "* Email is required",
@@ -16,6 +16,6 @@ export const ERROR_VALIDATE = {
   PASS_REQUIRED: "* Password is required",
   PASS_MIN_LENGTH: "Please enter at least 6 characters",
   PASS_NOT_MATCH: "Password does not match",
-};
+} as const;
 
 export default MESSAGE;

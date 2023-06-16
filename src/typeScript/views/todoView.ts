@@ -8,6 +8,7 @@ import TodoItem from "./modules/todoList/TodoItem";
 import handleGetElm from "../helpers/handleGetElm";
 
 const disableClassname = "disable";
+const getAll = true;
 
 class TodoView {
   private form: HTMLFormElement;
@@ -46,12 +47,11 @@ class TodoView {
     todoConfirm: HTMLDivElement,
     handle: (id: string) => void
   ): void {
-    const btnRemove = document.querySelector(
-      ".btn-confirm-remove"
-    ) as HTMLButtonElement;
-    const btnCancel = document.querySelector(
+    const btnRemove = handleGetElm<HTMLButtonElement>(".btn-confirm-remove");
+    const btnCancel = handleGetElm<HTMLButtonElement>(
       ".btn-confirm-remove-cancel"
-    ) as HTMLButtonElement;
+    );
+
     const RemoveConfirm = (): void => {
       const confirmParent = todoConfirm.parentNode as HTMLDivElement;
       confirmParent.removeChild(todoConfirm);
@@ -111,9 +111,10 @@ class TodoView {
   }
 
   activeTodoWhenDone(handle: (id: string, status: boolean) => void): void {
-    const todos = document.querySelectorAll(
-      ".todo-item"
-    ) as NodeListOf<HTMLDivElement>;
+    const todos = handleGetElm<NodeListOf<HTMLDivElement>>(
+      ".todo-item",
+      getAll
+    );
 
     [...todos].forEach((todo) => {
       todo.addEventListener("click", (e: MouseEvent) => {
@@ -152,7 +153,7 @@ class TodoView {
     ) as NodeListOf<HTMLButtonElement>;
 
     const handleForm = (todoValue: string): void => {
-      const form = document.querySelector(".main-form") as HTMLFormElement;
+      const form = handleGetElm<HTMLFormElement>(".main-form");
 
       if (!form) return;
       const inputTodo = form.querySelector(".main-input") as HTMLInputElement;
@@ -222,9 +223,10 @@ class TodoView {
   };
 
   disableTodoView = (clearDisable: boolean = false): void => {
-    const todoElm = document.querySelectorAll(
-      ".todo-item"
-    ) as NodeListOf<HTMLDivElement>;
+    const todoElm = handleGetElm<NodeListOf<HTMLDivElement>>(
+      ".todo-item",
+      getAll
+    );
 
     const inputMain = this.inputMain;
 
