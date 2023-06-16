@@ -33,7 +33,7 @@ class AppView {
   };
 
   showPage(classCurentPage: string, newPage: PAGE): void {
-    const curentPage = document.querySelector(`.${classCurentPage}`);
+    const curentPage = handleGetElm<HTMLDivElement>(`.${classCurentPage}`);
 
     if (!curentPage) return;
 

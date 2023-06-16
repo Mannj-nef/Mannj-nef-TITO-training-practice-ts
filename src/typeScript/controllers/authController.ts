@@ -1,6 +1,5 @@
 import AuthService from "../services/auth.service";
 import AuthView from "../views/authView";
-import AppView from "../views/appView";
 
 import { AuthForm, AuthLocalStorage, AuthLogin } from "../types";
 import { IAuthParam } from "../interfaces";
